@@ -26,9 +26,13 @@
 package com.scalified.jpa.function;
 
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Root;
 import java.util.function.Function;
 
 /**
+ * An alias function used to construct generic result from {@link CriteriaBuilder} and {@link Root}
+ *
  * @author shell
  * @version 1.0.0
  * @since 1.0.0

@@ -26,12 +26,21 @@
 package com.scalified.jpa.dsl.find;
 
 /**
+ * <b>DSL</b> for finding entities using previously defined entity class
+ *
  * @author shell
  * @version 1.0.0
  * @since 1.0.0
  */
 public interface JpaFindByEntityClassDsl<T> {
 
-	<K> T one(K key);
+	/**
+	 * Returns the entity found by its specified <code>key</code>
+	 *
+	 * @param primaryKey a primary key of an entity
+	 * @param <K>        type of a primary key of an entity
+	 * @return entity found by its specified <code>key</code>
+	 */
+	<K> T one(K primaryKey);
 
 }

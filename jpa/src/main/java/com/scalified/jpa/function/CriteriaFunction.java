@@ -30,6 +30,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.util.function.Function;
 
 /**
+ * An alias function used to construct {@link CriteriaQuery} from the {@link CriteriaBuilder}
+ *
  * @author shell
  * @version 1.0.0
  * @since 1.0.0

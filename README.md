@@ -15,9 +15,13 @@ The Library requires [Java SE Development Kit 8](http://www.oracle.com/technetwo
 
 ```java
 dependencies {
-	compile 'com.scalified:jpa:0.0.1'
+	compile 'com.scalified:jpa:0.0.2'
 }
 ```
+
+## Changelog
+
+[Changelog](CHANGELOG.md)
 
 ## Usage
 

@@ -28,24 +28,45 @@ package com.scalified.jpa.dsl.find;
 import com.scalified.jpa.manager.JpaManager;
 
 /**
+ * A {@link JpaFindByEntityClassDsl} implementation
+ *
  * @author shell
  * @version 1.0.0
  * @since 1.0.0
  */
 public class JpaFindByEntityClassDslImpl<T> implements JpaFindByEntityClassDsl<T> {
 
+	/**
+	 * An underlying {@link JpaManager}
+	 */
 	private final JpaManager manager;
 
+	/**
+	 * An entity class
+	 */
 	private final Class<T> entityClass;
 
+	/**
+	 * Creates {@link JpaFindByEntityClassDslImpl} instance
+	 *
+	 * @param manager     an underlying {@link JpaManager}
+	 * @param entityClass an entity class
+	 */
 	public JpaFindByEntityClassDslImpl(JpaManager manager, Class<T> entityClass) {
 		this.manager = manager;
 		this.entityClass = entityClass;
 	}
 
+	/**
+	 * Returns the entity found by its specified <code>key</code>
+	 *
+	 * @param primaryKey a primary key of an entity
+	 * @param <K>        type of a primary key of an entity
+	 * @return entity found by its specified <code>key</code>
+	 */
 	@Override
-	public <K> T one(K key) {
-		return manager.find(entityClass, key);
+	public <K> T one(K primaryKey) {
+		return manager.find(entityClass, primaryKey);
 	}
 
 }

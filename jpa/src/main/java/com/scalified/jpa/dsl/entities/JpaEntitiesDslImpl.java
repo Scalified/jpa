@@ -30,41 +30,74 @@ import com.scalified.jpa.manager.JpaManager;
 import java.util.Collection;
 
 /**
+ * A {@link JpaEntitiesDsl} implementation
+ *
  * @author shell
  * @version 1.0.0
  * @since 1.0.0
  */
 public class JpaEntitiesDslImpl<T extends Collection<T>> implements JpaEntitiesDsl<T> {
 
+	/**
+	 * An underlying {@link JpaManager}
+	 */
 	private final JpaManager manager;
 
+	/**
+	 * A collection of entities to perform operations on
+	 */
 	private Collection<T> entities;
 
+	/**
+	 * Creates {@link JpaEntitiesDslImpl} instance
+	 *
+	 * @param manager  an underlying {@link JpaManager}
+	 * @param entities collection of entities to perform operations on
+	 */
 	public JpaEntitiesDslImpl(JpaManager manager, Collection<T> entities) {
 		this.manager = manager;
 		this.entities = entities;
 	}
 
+	/**
+	 * Inserts the previously defined collection of entities
+	 *
+	 * @return inserted collection of entities
+	 */
 	@Override
 	public Collection<T> insert() {
 		return manager.insert(entities);
 	}
 
+	/**
+	 * Updates the previously defined collection of entities
+	 *
+	 * @return updated collection of entities
+	 */
 	@Override
 	public Collection<T> update() {
 		return manager.update(entities);
 	}
 
+	/**
+	 * Deletes the previously defined collection of entities
+	 */
 	@Override
 	public void delete() {
 		manager.delete(entities);
 	}
 
+	/**
+	 * Refreshes the state of each entity in previously defined collection
+	 */
 	@Override
 	public void refresh() {
 		manager.refresh(entities);
 	}
 
+	/**
+	 * Detaches each entity in previously defined collection from context
+	 */
 	@Override
 	public void detach() {
 		manager.detach(entities);

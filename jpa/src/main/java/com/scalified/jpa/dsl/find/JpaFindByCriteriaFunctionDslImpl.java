@@ -36,36 +36,73 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
+ * A {@link JpaFindByEntityClassDsl} implementation
+ *
  * @author shell
  * @version 1.0.0
  * @since 1.0.0
  */
 public class JpaFindByCriteriaFunctionDslImpl<T> implements JpaFindByCriteriaFunctionDsl<T> {
 
+	/**
+	 * An underlying {@link JpaManager}
+	 */
 	private final JpaManager manager;
 
+	/**
+	 * {@link CriteriaFunction} used to find result
+	 */
 	private final CriteriaFunction<T> function;
 
+	/**
+	 * Creates {@link JpaFindByCriteriaFunctionDsl} instance
+	 *
+	 * @param manager  an underlying {@link JpaManager}
+	 * @param function {@link CriteriaFunction} used to find result
+	 */
 	public JpaFindByCriteriaFunctionDslImpl(JpaManager manager, CriteriaFunction<T> function) {
 		this.manager = manager;
 		this.function = function;
 	}
 
+	/**
+	 * Returns a list of all found entities using previously defined {@link CriteriaFunction}
+	 *
+	 * @return a list of all found entities
+	 */
 	@Override
 	public List<T> all() {
 		return manager.find(function, TypedQuery::getResultList);
 	}
 
+	/**
+	 * Returns a set of unique found entities using previously defined {@link CriteriaFunction}
+	 *
+	 * @return a set of unique found entities
+	 */
 	@Override
 	public Set<T> unique() {
 		return new LinkedHashSet<>(all());
 	}
 
+	/**
+	 * Returns some generic result using previously defined {@link CriteriaFunction}
+	 * and after applying the specified <code>resultFunction</code>
+	 *
+	 * @param resultFunction a function to apply on result
+	 * @param <R>            type of generic result
+	 * @return some generic result
+	 */
 	@Override
 	public <R> R some(ResultFunction<T, R> resultFunction) {
 		return manager.find(function, resultFunction);
 	}
 
+	/**
+	 * Returns the first found entity using previously defined {@link CriteriaFunction}
+	 *
+	 * @return the first found entity
+	 */
 	@Override
 	public Optional<T> first() {
 		return all().stream().findFirst();

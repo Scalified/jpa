@@ -26,20 +26,41 @@
 package com.scalified.jpa.dsl.entity;
 
 /**
+ * <b>DSL</b> for working with single entity
+ *
  * @author shell
  * @version 1.0.0
  * @since 1.0.0
  */
 public interface JpaEntityDsl<T> {
 
+	/**
+	 * Inserts the previously defined entity
+	 *
+	 * @return inserted entity
+	 */
 	T insert();
 
+	/**
+	 * Updates the previously defined entity
+	 *
+	 * @return updated entity
+	 */
 	T update();
 
+	/**
+	 * Deletes the previously defined entity
+	 */
 	void delete();
 
+	/**
+	 * Refreshes the state of the previously defined entity
+	 */
 	void refresh();
 
+	/**
+	 * Detaches the previously defined entity from context
+	 */
 	void detach();
 
 }

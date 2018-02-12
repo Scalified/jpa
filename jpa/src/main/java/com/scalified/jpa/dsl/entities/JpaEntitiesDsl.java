@@ -28,20 +28,41 @@ package com.scalified.jpa.dsl.entities;
 import java.util.Collection;
 
 /**
+ * <b>DSL</b> for working with collection of entities
+ *
  * @author shell
  * @version 1.0.0
  * @since 1.0.0
  */
 public interface JpaEntitiesDsl<T extends Collection<T>> {
 
+	/**
+	 * Inserts the previously defined collection of entities
+	 *
+	 * @return inserted collection of entities
+	 */
 	Collection<T> insert();
 
+	/**
+	 * Updates the previously defined collection of entities
+	 *
+	 * @return updated collection of entities
+	 */
 	Collection<T> update();
 
+	/**
+	 * Deletes the previously defined collection of entities
+	 */
 	void delete();
 
+	/**
+	 * Refreshes the state of each entity in previously defined collection
+	 */
 	void refresh();
 
+	/**
+	 * Detaches each entity in previously defined collection from context
+	 */
 	void detach();
 
 }

@@ -29,28 +29,55 @@ import com.scalified.jpa.function.ExpressionFunction;
 import com.scalified.jpa.manager.JpaManager;
 
 /**
+ * A {@link JpaFromDsl} implementation
+ *
  * @author shell
  * @version 1.0.0
  * @since 1.0.0
  */
-public class JpaFromDslImpl<T> implements JpaFromDsl {
+public class JpaFromDslImpl<T> implements JpaFromDsl<T> {
 
+	/**
+	 * An underlying {@link JpaManager}
+	 */
 	private final JpaManager manager;
 
+	/**
+	 * An entity class
+	 */
 	private final Class<T> entityClass;
 
+	/**
+	 * Creates {@link JpaFromDslImpl} instance
+	 *
+	 * @param manager     an underlying {@link JpaManager}
+	 * @param entityClass an entity class
+	 */
 	public JpaFromDslImpl(JpaManager manager, Class<T> entityClass) {
 		this.manager = manager;
 		this.entityClass = entityClass;
 	}
 
+	/**
+	 * Returns count of all entities with previously defined class
+	 *
+	 * @return count of all entities with previously defined class
+	 */
 	@Override
 	public long count() {
 		return manager.count(entityClass);
 	}
 
+	/**
+	 * Returns count of entities with previously defined class, filtered by
+	 * the specified expression <code>function</code>
+	 *
+	 * @param function an expression <code>function</code> to filter entities
+	 * @return count of entities with previously defined class, filtered by
+	 * the specified expression <code>function</code>
+	 */
 	@Override
-	public long count(ExpressionFunction function) {
+	public long count(ExpressionFunction<T> function) {
 		return manager.count(entityClass, function);
 	}
 

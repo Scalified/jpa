@@ -36,22 +36,73 @@ import javax.persistence.EntityManager;
 import java.util.Collection;
 
 /**
+ * <p>
+ * The entry point to start working with <b>JPA DSL</b>
+ * <p>
+ * Declares root <b>DSL</b> methods within <b>DSL</b> call chain
+ *
  * @author shell
  * @version 1.0.0
  * @since 1.0.0
  */
 public interface Jpa {
 
+	/**
+	 * Returns {@link JpaFindByEntityClassDsl} object, which provides the next
+	 * <b>DSL</b> methods within <b>DSL</b> call chain to find entities by their class
+	 *
+	 * @param entityClass class of an entity
+	 * @param <T>         type of an entity
+	 * @return {@link JpaFindByEntityClassDsl} object
+	 */
 	<T> JpaFindByEntityClassDsl<T> find(Class<T> entityClass);
 
+	/**
+	 * Returns {@link JpaFindByCriteriaFunctionDsl} object, which provides the next
+	 * <b>DSL</b> methods within <b>DSL</b> call chain to find entities using
+	 * {@link CriteriaFunction}
+	 *
+	 * @param function {@link CriteriaFunction} object
+	 * @param <T>      type of an entity
+	 * @return {@link JpaFindByCriteriaFunctionDsl} object
+	 */
 	<T> JpaFindByCriteriaFunctionDsl<T> find(CriteriaFunction<T> function);
 
-	<T> JpaFromDsl from(Class<T> entityClass);
+	/**
+	 * Returns {@link JpaFromDsl} object, which provides the next <b>DSL</b> methods
+	 * within <b>DSL</b> call chain derived from entity class
+	 *
+	 * @param entityClass class of an entity
+	 * @param <T>         type of an entity
+	 * @return {@link JpaFromDsl} object
+	 */
+	<T> JpaFromDsl<T> from(Class<T> entityClass);
 
+	/**
+	 * Returns {@link JpaEntityDsl} object, which provides the next <b>DSL</b> methods
+	 * within <b>DSL</b> call chain derived from entity object
+	 *
+	 * @param entity an entity instance
+	 * @param <T>    type of an entity
+	 * @return {@link JpaEntityDsl} object
+	 */
 	<T> JpaEntityDsl<T> entity(T entity);
 
+	/**
+	 * Returns {@link JpaEntitiesDsl} object, which provides the next <b>DSL</b> methods
+	 * within <b>DSL</b> call chain derived from collection of entity objects
+	 *
+	 * @param entities a collection of entity instances
+	 * @param <T>      type of an entity
+	 * @return {@link JpaEntitiesDsl} object
+	 */
 	<T extends Collection<T>> JpaEntitiesDsl<T> entities(Collection<T> entities);
 
+	/**
+	 * Returns the underlying {@link EntityManager}
+	 *
+	 * @return underlying {@link EntityManager}
+	 */
 	EntityManager em();
 
 }

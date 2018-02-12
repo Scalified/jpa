@@ -26,11 +26,14 @@
 package com.scalified.jpa.function;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Root;
 import java.util.function.BiFunction;
 
 /**
+ * An alias function used to construct {@link Expression} from {@link CriteriaBuilder} and {@link Root}
+ *
  * @author shell
  * @version 1.0.0
  * @since 1.0.0

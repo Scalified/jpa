@@ -28,14 +28,29 @@ package com.scalified.jpa.dsl.from;
 import com.scalified.jpa.function.ExpressionFunction;
 
 /**
+ * <b>DSL</b> for working with derived methods of entity class
+ *
  * @author shell
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface JpaFromDsl {
+public interface JpaFromDsl<T> {
 
+	/**
+	 * Returns count of all entities with previously defined class
+	 *
+	 * @return count of all entities with previously defined class
+	 */
 	long count();
 
-	long count(ExpressionFunction function);
+	/**
+	 * Returns count of entities with previously defined class, filtered by
+	 * the specified expression <code>function</code>
+	 *
+	 * @param function an expression <code>function</code> to filter entities
+	 * @return count of entities with previously defined class, filtered by
+	 * the specified expression <code>function</code>
+	 */
+	long count(ExpressionFunction<T> function);
 
 }

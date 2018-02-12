@@ -28,41 +28,74 @@ package com.scalified.jpa.dsl.entity;
 import com.scalified.jpa.manager.JpaManager;
 
 /**
+ * A {@link JpaEntityDsl} implementation
+ *
  * @author shell
  * @version 1.0.0
  * @since 1.0.0
  */
 public class JpaEntityDslImpl<T> implements JpaEntityDsl<T> {
 
+	/**
+	 * An underlying {@link JpaManager}
+	 */
 	private final JpaManager manager;
 
+	/**
+	 * An entity to perform operations on
+	 */
 	private final T entity;
 
+	/**
+	 * Creates {@link JpaEntityDslImpl} instance
+	 *
+	 * @param manager an underlying {@link JpaManager}
+	 * @param entity  entity to perform operations on
+	 */
 	public JpaEntityDslImpl(JpaManager manager, T entity) {
 		this.manager = manager;
 		this.entity = entity;
 	}
 
+	/**
+	 * Inserts the previously defined entity
+	 *
+	 * @return inserted entity
+	 */
 	@Override
 	public T insert() {
 		return manager.insert(entity);
 	}
 
+	/**
+	 * Updates the previously defined entity
+	 *
+	 * @return updated entity
+	 */
 	@Override
 	public T update() {
 		return manager.update(entity);
 	}
 
+	/**
+	 * Deletes the previously defined entity
+	 */
 	@Override
 	public void delete() {
 		manager.delete(entity);
 	}
 
+	/**
+	 * Refreshes the state of the previously defined entity
+	 */
 	@Override
 	public void refresh() {
 		manager.refresh(entity);
 	}
 
+	/**
+	 * Detaches the previously defined entity from context
+	 */
 	@Override
 	public void detach() {
 		manager.detach(entity);

@@ -25,6 +25,7 @@
 
 package com.scalified.jpa.dsl.find;
 
+import com.scalified.jpa.function.CriteriaFunction;
 import com.scalified.jpa.function.ResultFunction;
 
 import java.util.List;
@@ -32,18 +33,43 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
+ * <b>DSL</b> for finding entities using previously defined {@link CriteriaFunction}
+ *
  * @author shell
  * @version 1.0.0
  * @since 1.0.0
  */
 public interface JpaFindByCriteriaFunctionDsl<T> {
 
+	/**
+	 * Returns a list of all found entities using previously defined {@link CriteriaFunction}
+	 *
+	 * @return a list of all found entities
+	 */
 	List<T> all();
 
+	/**
+	 * Returns a set of unique found entities using previously defined {@link CriteriaFunction}
+	 *
+	 * @return a set of unique found entities
+	 */
 	Set<T> unique();
 
+	/**
+	 * Returns some generic result using previously defined {@link CriteriaFunction}
+	 * and after applying the specified <code>resultFunction</code>
+	 *
+	 * @param resultFunction a function to apply on result
+	 * @param <R>            type of generic result
+	 * @return some generic result
+	 */
 	<R> R some(ResultFunction<T, R> resultFunction);
 
+	/**
+	 * Returns the first found entity using previously defined {@link CriteriaFunction}
+	 *
+	 * @return the first found entity
+	 */
 	Optional<T> first();
 
 }

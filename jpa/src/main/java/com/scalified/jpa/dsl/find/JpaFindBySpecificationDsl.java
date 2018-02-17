@@ -23,5 +23,53 @@
  *
  */
 
-rootProject.name = 'jpa-root'
-include 'jpa'
+package com.scalified.jpa.dsl.find;
+
+import com.scalified.jpa.function.ResultFunction;
+import com.scalified.jpa.specification.Specification;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+/**
+ * <b>DSL</b> for finding entities using {@link Specification}
+ *
+ * @author shell
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+public interface JpaFindBySpecificationDsl<T> {
+
+	/**
+	 * Returns a list of all found entities using {@link Specification}
+	 *
+	 * @return a list of all found entities
+	 */
+	List<T> all();
+
+	/**
+	 * Returns a set of unique found entities using {@link Specification}
+	 *
+	 * @return a set of unique found entities
+	 */
+	Set<T> unique();
+
+	/**
+	 * Returns some generic result using {@link Specification}
+	 * and after applying the specified <b>resultFunction</b>
+	 *
+	 * @param resultFunction a function to apply on result
+	 * @param <R>            type of generic result
+	 * @return some generic result
+	 */
+	<R> R some(ResultFunction<T, R> resultFunction);
+
+	/**
+	 * Returns the first found entity using {@link Specification}
+	 *
+	 * @return the first found entity
+	 */
+	Optional<T> first();
+
+}

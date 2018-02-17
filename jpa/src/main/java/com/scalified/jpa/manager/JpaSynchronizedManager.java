@@ -28,6 +28,7 @@ package com.scalified.jpa.manager;
 import com.scalified.jpa.function.CriteriaFunction;
 import com.scalified.jpa.function.ExpressionFunction;
 import com.scalified.jpa.function.ResultFunction;
+import com.scalified.jpa.specification.Specification;
 
 import javax.persistence.EntityManager;
 import java.util.Collection;
@@ -57,7 +58,7 @@ public class JpaSynchronizedManager implements JpaManager {
 	}
 
 	/**
-	 * Returns an entity found by its <code>primaryKey</code>
+	 * Returns an entity found by its <b>primaryKey</b>
 	 *
 	 * @param entityClass a class of a searched entity
 	 * @param primaryKey  a primary key of a searched entity
@@ -71,9 +72,10 @@ public class JpaSynchronizedManager implements JpaManager {
 	}
 
 	/**
-	 * Returns the generic result derived from applying <code>resultFunction</code>
+	 * Returns the generic result found by the specified <b>criteriaFunction</b> and
+	 * derived from applying the specified <b>resultFunction</b>
 	 *
-	 * @param criteriaFunction a function to
+	 * @param criteriaFunction a function to find result
 	 * @param resultFunction   a function, which maps {@link javax.persistence.criteria.CriteriaBuilder}
 	 *                         to a generic result
 	 * @param <T>              type of an entity
@@ -86,7 +88,23 @@ public class JpaSynchronizedManager implements JpaManager {
 	}
 
 	/**
-	 * Returns the count of all entities with the specified <code>entityClass</code>
+	 * Returns the generic result found by the specified <b>specification</b> and
+	 * derived from applying the specified <b>resultFunction</b>
+	 *
+	 * @param specification  a specification to find result
+	 * @param resultFunction a function, which maps {@link javax.persistence.criteria.CriteriaBuilder}
+	 *                       to a generic result
+	 * @param <T>            type of an entity
+	 * @param <R>            type of the result
+	 * @return generic result object
+	 */
+	@Override
+	public <T, R> R find(Specification<T> specification, ResultFunction<T, R> resultFunction) {
+		return manager.find(specification, resultFunction);
+	}
+
+	/**
+	 * Returns the count of all entities with the specified <b>entityClass</b>
 	 *
 	 * @param entityClass a class of an entity
 	 * @param <T>         type of an entity
@@ -98,8 +116,8 @@ public class JpaSynchronizedManager implements JpaManager {
 	}
 
 	/**
-	 * Returns the count of entities with the specified <code>entityClass</code> filtered
-	 * by the specified expression <code>function</code>
+	 * Returns the count of entities with the specified <b>entityClass</b> filtered
+	 * by the specified expression <b>function</b>
 	 *
 	 * @param entityClass a class of an entity
 	 * @param function    an {@link ExpressionFunction} to apply filter

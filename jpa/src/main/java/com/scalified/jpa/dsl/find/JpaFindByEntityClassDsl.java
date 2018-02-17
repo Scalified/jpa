@@ -35,11 +35,11 @@ package com.scalified.jpa.dsl.find;
 public interface JpaFindByEntityClassDsl<T> {
 
 	/**
-	 * Returns the entity found by its specified <code>key</code>
+	 * Returns the entity found by its specified <b>key</b>
 	 *
 	 * @param primaryKey a primary key of an entity
 	 * @param <K>        type of a primary key of an entity
-	 * @return entity found by its specified <code>key</code>
+	 * @return entity found by its specified <b>key</b>
 	 */
 	<K> T one(K primaryKey);
 

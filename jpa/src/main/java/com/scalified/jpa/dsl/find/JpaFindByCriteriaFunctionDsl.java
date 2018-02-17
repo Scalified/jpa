@@ -57,7 +57,7 @@ public interface JpaFindByCriteriaFunctionDsl<T> {
 
 	/**
 	 * Returns some generic result using previously defined {@link CriteriaFunction}
-	 * and after applying the specified <code>resultFunction</code>
+	 * and after applying the specified <b>resultFunction</b>
 	 *
 	 * @param resultFunction a function to apply on result
 	 * @param <R>            type of generic result

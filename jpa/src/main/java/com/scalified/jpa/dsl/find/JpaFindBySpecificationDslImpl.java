@@ -25,9 +25,9 @@
 
 package com.scalified.jpa.dsl.find;
 
-import com.scalified.jpa.function.CriteriaFunction;
 import com.scalified.jpa.function.ResultFunction;
 import com.scalified.jpa.manager.JpaManager;
+import com.scalified.jpa.specification.Specification;
 
 import javax.persistence.TypedQuery;
 import java.util.LinkedHashSet;
@@ -36,13 +36,13 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * A {@link JpaFindByCriteriaFunctionDsl} implementation
+ * A {@link JpaFindBySpecificationDsl} implementation
  *
  * @author shell
  * @version 1.0.0
  * @since 1.0.0
  */
-public class JpaFindByCriteriaFunctionDslImpl<T> implements JpaFindByCriteriaFunctionDsl<T> {
+public class JpaFindBySpecificationDslImpl<T> implements JpaFindBySpecificationDsl<T> {
 
 	/**
 	 * An underlying {@link JpaManager}
@@ -50,33 +50,33 @@ public class JpaFindByCriteriaFunctionDslImpl<T> implements JpaFindByCriteriaFun
 	private final JpaManager manager;
 
 	/**
-	 * {@link CriteriaFunction} used to find result
+	 * {@link Specification} used to find result
 	 */
-	private final CriteriaFunction<T> function;
+	private final Specification<T> specification;
 
 	/**
-	 * Creates {@link JpaFindByCriteriaFunctionDsl} instance
+	 * Creates {@link JpaFindBySpecificationDslImpl} instance
 	 *
-	 * @param manager  an underlying {@link JpaManager}
-	 * @param function {@link CriteriaFunction} used to find result
+	 * @param manager       an underlying {@link JpaManager}
+	 * @param specification {@link Specification} used to find result
 	 */
-	public JpaFindByCriteriaFunctionDslImpl(JpaManager manager, CriteriaFunction<T> function) {
+	public JpaFindBySpecificationDslImpl(JpaManager manager, Specification<T> specification) {
 		this.manager = manager;
-		this.function = function;
+		this.specification = specification;
 	}
 
 	/**
-	 * Returns a list of all found entities using previously defined {@link CriteriaFunction}
+	 * Returns a list of all found entities using {@link Specification}
 	 *
 	 * @return a list of all found entities
 	 */
 	@Override
 	public List<T> all() {
-		return manager.find(function, TypedQuery::getResultList);
+		return manager.find(specification, TypedQuery::getResultList);
 	}
 
 	/**
-	 * Returns a set of unique found entities using previously defined {@link CriteriaFunction}
+	 * Returns a set of unique found entities using {@link Specification}
 	 *
 	 * @return a set of unique found entities
 	 */
@@ -86,7 +86,7 @@ public class JpaFindByCriteriaFunctionDslImpl<T> implements JpaFindByCriteriaFun
 	}
 
 	/**
-	 * Returns some generic result using previously defined {@link CriteriaFunction}
+	 * Returns some generic result using {@link Specification}
 	 * and after applying the specified <b>resultFunction</b>
 	 *
 	 * @param resultFunction a function to apply on result
@@ -95,11 +95,11 @@ public class JpaFindByCriteriaFunctionDslImpl<T> implements JpaFindByCriteriaFun
 	 */
 	@Override
 	public <R> R some(ResultFunction<T, R> resultFunction) {
-		return manager.find(function, resultFunction);
+		return manager.find(specification, resultFunction);
 	}
 
 	/**
-	 * Returns the first found entity using previously defined {@link CriteriaFunction}
+	 * Returns the first found entity using {@link Specification}
 	 *
 	 * @return the first found entity
 	 */

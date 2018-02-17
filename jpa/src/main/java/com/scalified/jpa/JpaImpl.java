@@ -29,15 +29,13 @@ import com.scalified.jpa.dsl.entities.JpaEntitiesDsl;
 import com.scalified.jpa.dsl.entities.JpaEntitiesDslImpl;
 import com.scalified.jpa.dsl.entity.JpaEntityDsl;
 import com.scalified.jpa.dsl.entity.JpaEntityDslImpl;
-import com.scalified.jpa.dsl.find.JpaFindByCriteriaFunctionDsl;
-import com.scalified.jpa.dsl.find.JpaFindByCriteriaFunctionDslImpl;
-import com.scalified.jpa.dsl.find.JpaFindByEntityClassDsl;
-import com.scalified.jpa.dsl.find.JpaFindByEntityClassDslImpl;
+import com.scalified.jpa.dsl.find.*;
 import com.scalified.jpa.dsl.from.JpaFromDsl;
 import com.scalified.jpa.dsl.from.JpaFromDslImpl;
 import com.scalified.jpa.function.CriteriaFunction;
 import com.scalified.jpa.manager.JpaManager;
 import com.scalified.jpa.manager.JpaStandardManager;
+import com.scalified.jpa.specification.Specification;
 
 import javax.persistence.EntityManager;
 import java.util.Collection;
@@ -99,6 +97,20 @@ public class JpaImpl implements Jpa {
 	@Override
 	public <T> JpaFindByCriteriaFunctionDsl<T> find(CriteriaFunction<T> function) {
 		return new JpaFindByCriteriaFunctionDslImpl<>(manager, function);
+	}
+
+	/**
+	 * Returns {@link JpaFindBySpecificationDsl} object, which provides the next
+	 * <b>DSL</b> methods within <b>DSL</b> call chain to find entities using
+	 * {@link Specification}
+	 *
+	 * @param specification {@link Specification} object
+	 * @param <T>           type of an entity
+	 * @return {@link JpaFindBySpecificationDsl} object
+	 */
+	@Override
+	public <T> JpaFindBySpecificationDsl<T> find(Specification<T> specification) {
+		return new JpaFindBySpecificationDslImpl<>(manager, specification);
 	}
 
 	/**

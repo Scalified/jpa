@@ -205,36 +205,6 @@ jpa.entities(persons).refresh();
 jpa.entities(persons).detach();
 ```
 
-### Entity Utilities
-
-**EntityUtils** class provides static utility methods for working with entities
-
-```java
-class Person {
-
-    String firstName;
-    String lastName;
-    int age;
-
-    Person(String firstName, String lastName, int age) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-    }
-
-}
-
-Person first = new Person("John", "Smith", null);
-Person second = new Person("Bob", null, 10);
-
-// Updating the first entity with the non-null values from the second entity
-EntityUtils.update(first, second);
-
-assert first.firstName.equals("Bob");
-assert first.lastName.equals("Smith");
-assert first.age == 10;
-```
-
 ## License
 
 ```

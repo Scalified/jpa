@@ -45,11 +45,11 @@ public interface JpaFromDsl<T> {
 
 	/**
 	 * Returns count of entities with previously defined class, filtered by
-	 * the specified expression <code>function</code>
+	 * the specified expression <b>function</b>
 	 *
-	 * @param function an expression <code>function</code> to filter entities
+	 * @param function an expression <b>function</b> to filter entities
 	 * @return count of entities with previously defined class, filtered by
-	 * the specified expression <code>function</code>
+	 * the specified expression <b>function</b>
 	 */
 	long count(ExpressionFunction<T> function);
 

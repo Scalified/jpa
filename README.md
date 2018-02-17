@@ -15,7 +15,7 @@ The Library requires [Java SE Development Kit 8](http://www.oracle.com/technetwo
 
 ```java
 dependencies {
-	compile 'com.scalified:jpa:0.0.2'
+	compile 'com.scalified:jpa:0.0.3'
 }
 ```
 
@@ -57,7 +57,7 @@ Jpa jpa = new JpaImpl(new JpaSynchronizedManager(new JpaTransactionalManager(new
 
 ### Find DSL
 
-**Find** DSL provides convenient way of selecting entities by their classes or by specifying **CriteriaFunction**
+**Find** DSL provides convenient way of selecting entities
 
 ```java
 Jpa jpa;
@@ -69,6 +69,15 @@ class Person {
 
     @Id
     String name;
+
+    int age;
+
+    Gender gender;
+
+    enum Gender {
+        MALE,
+        FEMALE
+    }
 
 }
 
@@ -95,6 +104,52 @@ Optional<Person> person = jpa.find(builder -> {
     Root<Person> root = criteriaQuery.from(Person.class);
     return criteriaQuery.select(root);
 }).first();
+
+
+// Finding with Specification Pattern
+class IsYoungSpecification implements Specification<Person> {
+
+    private static final int MAX_YOUNG_AGE_YEARS = 20;
+
+    @Override
+    public boolean isSatisfiedBy(Person what) {
+        return what.getAge() < MAX_YOUNG_AGE_YEARS;
+    }
+
+    @Override
+    public Predicate toPredicate(CriteriaBuilder builder, Root<Person> root) {
+        return builder.lessThan(root.get(Person._age), MAX_YOUNG_AGE_YEARS);
+    }
+
+}
+
+Person person = new Person(Gender.FEMALE, 20);
+Specification<Person> isYoungSpecification = new IsYoungSpecification();
+boolean isYoung = isYoungSpecification.isSatisfiedBy(person); // checks whether person satisfies specification
+
+List<Person> youngPersons = jpa.find(isYoungSpecification).all(); // finds all young persons
+
+class IsFemaleSpecification implements Specification<Person> {
+
+    @Override
+    public boolean isSatisfiedBy(Person what) {
+        return what.getGender() == Gender.FEMALE;
+    }
+
+    @Override
+    public Predicate toPredicate(CriteriaBuilder builder, Root<Person> root) {
+        return builder.equal(root.get(Person._gender), Gender.FEMALE);
+    }
+
+}
+
+Specification<Person> isFemaleSpecification = new IsFemaleSpecification();
+
+// Combining multiple specifications into one AND condition specification
+List<Person> youngFemalePersons = jpa.find(new AndSpecification<>(isYoungSpecification, isFemaleSpecification)).all();
+
+// Combining multiple specifications into one OR condition specification
+List<Person> youngOrFemalePersons = jpa.find(new OrSpecification<>(isYoungSpecification, isFemaleSpecification)).all();
 ```
 
 ### From DSL
@@ -203,36 +258,6 @@ jpa.entities(persons).refresh();
 
 // Detaching each person in collection from entity context
 jpa.entities(persons).detach();
-```
-
-### Entity Utilities
-
-**EntityUtils** class provides static utility methods for working with entities
-
-```java
-class Person {
-
-    String firstName;
-    String lastName;
-    int age;
-
-    Person(String firstName, String lastName, int age) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-    }
-
-}
-
-Person first = new Person("John", "Smith", null);
-Person second = new Person("Bob", null, 10);
-
-// Updating the first entity with the non-null values from the second entity
-EntityUtils.update(first, second);
-
-assert first.firstName.equals("Bob");
-assert first.lastName.equals("Smith");
-assert first.age == 10;
 ```
 
 ## License

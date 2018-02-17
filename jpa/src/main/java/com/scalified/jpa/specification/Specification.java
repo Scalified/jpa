@@ -23,50 +23,50 @@
  *
  */
 
-package com.scalified.jpa.dsl.find;
+package com.scalified.jpa.specification;
 
-import com.scalified.jpa.manager.JpaManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.lang.reflect.ParameterizedType;
 
 /**
- * A {@link JpaFindByEntityClassDsl} implementation
+ * Describes specifications based on specification pattern
  *
  * @author shell
  * @version 1.0.0
  * @since 1.0.0
  */
-public class JpaFindByEntityClassDslImpl<T> implements JpaFindByEntityClassDsl<T> {
+public interface Specification<T> {
 
 	/**
-	 * An underlying {@link JpaManager}
-	 */
-	private final JpaManager manager;
-
-	/**
-	 * An entity class
-	 */
-	private final Class<T> entityClass;
-
-	/**
-	 * Creates {@link JpaFindByEntityClassDslImpl} instance
+	 * Returns <b>true</b> if the specified object matches the current {@link Specification},
+	 * otherwise returns <b>false</b>
 	 *
-	 * @param manager     an underlying {@link JpaManager}
-	 * @param entityClass an entity class
+	 * @param what an object to check {@link Specification} matching
+	 * @return <b>true</b> if the specified object matches the current {@link Specification},
+	 * <b>false</b> otherwise
 	 */
-	public JpaFindByEntityClassDslImpl(JpaManager manager, Class<T> entityClass) {
-		this.manager = manager;
-		this.entityClass = entityClass;
-	}
+	boolean isSatisfiedBy(T what);
 
 	/**
-	 * Returns the entity found by its specified <b>key</b>
+	 * Constructs the {@link Predicate} from the current {@link Specification}
 	 *
-	 * @param primaryKey a primary key of an entity
-	 * @param <K>        type of a primary key of an entity
-	 * @return entity found by its specified <b>key</b>
+	 * @param builder criteria builder
+	 * @param root    root
+	 * @return a {@link Predicate} constructed from the current specification
 	 */
-	@Override
-	public <K> T one(K primaryKey) {
-		return manager.find(entityClass, primaryKey);
+	Predicate toPredicate(CriteriaBuilder builder, Root<T> root);
+
+	/**
+	 * Returns the current {@link Specification} type
+	 *
+	 * @return current {@link Specification} type
+	 */
+	@SuppressWarnings("unchecked")
+	default Class<T> getType() {
+		ParameterizedType type = (ParameterizedType) this.getClass().getGenericSuperclass();
+		return (Class<T>) type.getActualTypeArguments()[0];
 	}
 
 }

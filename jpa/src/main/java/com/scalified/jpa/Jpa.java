@@ -29,8 +29,10 @@ import com.scalified.jpa.dsl.entities.JpaEntitiesDsl;
 import com.scalified.jpa.dsl.entity.JpaEntityDsl;
 import com.scalified.jpa.dsl.find.JpaFindByCriteriaFunctionDsl;
 import com.scalified.jpa.dsl.find.JpaFindByEntityClassDsl;
+import com.scalified.jpa.dsl.find.JpaFindBySpecificationDsl;
 import com.scalified.jpa.dsl.from.JpaFromDsl;
 import com.scalified.jpa.function.CriteriaFunction;
+import com.scalified.jpa.specification.Specification;
 
 import javax.persistence.EntityManager;
 import java.util.Collection;
@@ -67,6 +69,17 @@ public interface Jpa {
 	 * @return {@link JpaFindByCriteriaFunctionDsl} object
 	 */
 	<T> JpaFindByCriteriaFunctionDsl<T> find(CriteriaFunction<T> function);
+
+	/**
+	 * Returns {@link JpaFindBySpecificationDsl} object, which provides the next
+	 * <b>DSL</b> methods within <b>DSL</b> call chain to find entities using
+	 * {@link Specification}
+	 *
+	 * @param specification {@link Specification} object
+	 * @param <T>           type of an entity
+	 * @return {@link JpaFindBySpecificationDsl} object
+	 */
+	<T> JpaFindBySpecificationDsl<T> find(Specification<T> specification);
 
 	/**
 	 * Returns {@link JpaFromDsl} object, which provides the next <b>DSL</b> methods

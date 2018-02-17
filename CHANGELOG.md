@@ -11,3 +11,9 @@
 ## New Features
 
 * Javadoc
+
+# 0.0.3
+
+## Features
+
+* Specification Pattern

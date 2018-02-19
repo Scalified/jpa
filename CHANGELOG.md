@@ -17,3 +17,9 @@
 ## Features
 
 * Specification Pattern
+
+# 0.0.4
+
+## Features
+
+* [Methods rename](https://github.com/Scalified/jpa/issues/7)

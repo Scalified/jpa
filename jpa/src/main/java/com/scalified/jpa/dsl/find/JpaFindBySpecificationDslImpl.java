@@ -71,7 +71,7 @@ public class JpaFindBySpecificationDslImpl<T> implements JpaFindBySpecificationD
 	 * @return a list of all found entities
 	 */
 	@Override
-	public List<T> all() {
+	public List<T> list() {
 		return manager.find(specification, TypedQuery::getResultList);
 	}
 
@@ -81,8 +81,8 @@ public class JpaFindBySpecificationDslImpl<T> implements JpaFindBySpecificationD
 	 * @return a set of unique found entities
 	 */
 	@Override
-	public Set<T> unique() {
-		return new LinkedHashSet<>(all());
+	public Set<T> set() {
+		return new LinkedHashSet<>(list());
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class JpaFindBySpecificationDslImpl<T> implements JpaFindBySpecificationD
 	 */
 	@Override
 	public Optional<T> first() {
-		return all().stream().findFirst();
+		return list().stream().findFirst();
 	}
 
 }

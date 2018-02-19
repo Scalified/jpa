@@ -46,14 +46,14 @@ public interface JpaFindByCriteriaFunctionDsl<T> {
 	 *
 	 * @return a list of all found entities
 	 */
-	List<T> all();
+	List<T> list();
 
 	/**
-	 * Returns a set of unique found entities using previously defined {@link CriteriaFunction}
+	 * Returns a set of all found entities using previously defined {@link CriteriaFunction}
 	 *
-	 * @return a set of unique found entities
+	 * @return a set of all found entities
 	 */
-	Set<T> unique();
+	Set<T> set();
 
 	/**
 	 * Returns some generic result using previously defined {@link CriteriaFunction}

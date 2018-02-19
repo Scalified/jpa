@@ -15,7 +15,7 @@ The Library requires [Java SE Development Kit 8](http://www.oracle.com/technetwo
 
 ```java
 dependencies {
-	compile 'com.scalified:jpa:0.0.3'
+	compile 'com.scalified:jpa:0.0.4'
 }
 ```
 
@@ -84,19 +84,19 @@ class Person {
 // Finding entity by key
 Person personJohn = jpa.find(Person.class).one("John");
 
-// Finding a list of entities
+// Finding entities by criteria function and mapping results to list
 List<Person> personList = jpa.find(builder -> {
     CriteriaQuery<Person> criteriaQuery = builder.createQuery(Person.class);
     Root<Person> root = criteriaQuery.from(Person.class);
     return criteriaQuery.select(root);
-}).all();
+}).list();
 
-// Finding a set of entities
+// Finding entities by criteria function and mapping results to set
 Set<Person> personSet = jpa.find(builder -> {
     CriteriaQuery<Person> criteriaQuery = builder.createQuery(Person.class);
     Root<Person> root = criteriaQuery.from(Person.class);
     return criteriaQuery.select(root);
-}).unique();
+}).set();
 
 // Finding optional entity
 Optional<Person> person = jpa.find(builder -> {

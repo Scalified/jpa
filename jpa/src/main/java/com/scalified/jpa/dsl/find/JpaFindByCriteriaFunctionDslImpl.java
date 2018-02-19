@@ -71,18 +71,18 @@ public class JpaFindByCriteriaFunctionDslImpl<T> implements JpaFindByCriteriaFun
 	 * @return a list of all found entities
 	 */
 	@Override
-	public List<T> all() {
+	public List<T> list() {
 		return manager.find(function, TypedQuery::getResultList);
 	}
 
 	/**
-	 * Returns a set of unique found entities using previously defined {@link CriteriaFunction}
+	 * Returns a set of all found entities using previously defined {@link CriteriaFunction}
 	 *
-	 * @return a set of unique found entities
+	 * @return a set of all found entities
 	 */
 	@Override
-	public Set<T> unique() {
-		return new LinkedHashSet<>(all());
+	public Set<T> set() {
+		return new LinkedHashSet<>(list());
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class JpaFindByCriteriaFunctionDslImpl<T> implements JpaFindByCriteriaFun
 	 */
 	@Override
 	public Optional<T> first() {
-		return all().stream().findFirst();
+		return list().stream().findFirst();
 	}
 
 }

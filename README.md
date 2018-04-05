@@ -15,7 +15,7 @@ The Library requires [Java SE Development Kit 8](http://www.oracle.com/technetwo
 
 ```java
 dependencies {
-	compile 'com.scalified:jpa:0.0.4'
+	compile 'com.scalified:jpa:0.0.5'
 }
 ```
 

@@ -24,12 +24,8 @@
  */
 
 apply plugin: 'java'
-
-// Publishing
-if (hasProperty('JAR_PUBLISHING_SCRIPT')) {
-	apply from: properties['JAR_PUBLISHING_SCRIPT']
-}
+apply plugin: 'maven-publish'
 
 dependencies {
-	compile 'javax:javaee-api:7.0'
+	compileOnly 'javax:javaee-api:8.0'
 }

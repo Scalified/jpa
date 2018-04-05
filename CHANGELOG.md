@@ -1,16 +1,12 @@
-# 0.0.1
+# 0.0.5
 
-## Initial Release. Basic Functionality
+* [**#10** Contravariance / Covariance Absent](https://github.com/Scalified/jpa/issues/10)
 
-* CRUD operations on entities
-* Counting entities
-* Entity utilities to copy fields between entities
+# 0.0.4
 
-# 0.0.2
+## Features
 
-## New Features
-
-* Javadoc
+* [Methods rename](https://github.com/Scalified/jpa/issues/7)
 
 # 0.0.3
 
@@ -18,8 +14,16 @@
 
 * Specification Pattern
 
-# 0.0.4
+# 0.0.2
 
-## Features
+## New Features
 
-* [Methods rename](https://github.com/Scalified/jpa/issues/7)
+* Javadoc
+
+# 0.0.1
+
+## Initial Release. Basic Functionality
+
+* CRUD operations on entities
+* Counting entities
+* Entity utilities to copy fields between entities

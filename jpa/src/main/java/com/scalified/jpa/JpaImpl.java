@@ -145,10 +145,11 @@ public class JpaImpl implements Jpa {
 	 *
 	 * @param entities a collection of entity instances
 	 * @param <T>      type of an entity
+	 * @param <K>      type of entities collection
 	 * @return {@link JpaEntitiesDsl} object
 	 */
 	@Override
-	public <T extends Collection<T>> JpaEntitiesDsl<T> entities(Collection<T> entities) {
+	public <T, K extends Collection<T>> JpaEntitiesDsl<T> entities(K entities) {
 		return new JpaEntitiesDslImpl<>(manager, entities);
 	}
 

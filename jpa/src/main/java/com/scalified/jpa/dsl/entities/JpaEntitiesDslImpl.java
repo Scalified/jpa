@@ -36,7 +36,7 @@ import java.util.Collection;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class JpaEntitiesDslImpl<T extends Collection<T>> implements JpaEntitiesDsl<T> {
+public class JpaEntitiesDslImpl<T, K extends Collection<T>> implements JpaEntitiesDsl<T> {
 
 	/**
 	 * An underlying {@link JpaManager}
@@ -46,7 +46,7 @@ public class JpaEntitiesDslImpl<T extends Collection<T>> implements JpaEntitiesD
 	/**
 	 * A collection of entities to perform operations on
 	 */
-	private Collection<T> entities;
+	private K entities;
 
 	/**
 	 * Creates {@link JpaEntitiesDslImpl} instance
@@ -54,7 +54,7 @@ public class JpaEntitiesDslImpl<T extends Collection<T>> implements JpaEntitiesD
 	 * @param manager  an underlying {@link JpaManager}
 	 * @param entities collection of entities to perform operations on
 	 */
-	public JpaEntitiesDslImpl(JpaManager manager, Collection<T> entities) {
+	public JpaEntitiesDslImpl(JpaManager manager, K entities) {
 		this.manager = manager;
 		this.entities = entities;
 	}

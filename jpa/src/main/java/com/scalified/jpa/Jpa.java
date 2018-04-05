@@ -107,9 +107,10 @@ public interface Jpa {
 	 *
 	 * @param entities a collection of entity instances
 	 * @param <T>      type of an entity
+	 * @param <K>      type of entities collection
 	 * @return {@link JpaEntitiesDsl} object
 	 */
-	<T extends Collection<T>> JpaEntitiesDsl<T> entities(Collection<T> entities);
+	<T, K extends Collection<T>> JpaEntitiesDsl<T> entities(K entities);
 
 	/**
 	 * Returns the underlying {@link EntityManager}

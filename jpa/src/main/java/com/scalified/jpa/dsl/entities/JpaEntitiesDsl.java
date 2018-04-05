@@ -34,7 +34,7 @@ import java.util.Collection;
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface JpaEntitiesDsl<T extends Collection<T>> {
+public interface JpaEntitiesDsl<T> {
 
 	/**
 	 * Inserts the previously defined collection of entities

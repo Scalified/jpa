@@ -27,8 +27,8 @@ import java.nio.charset.StandardCharsets
 
 allprojects {
 
-	group = POM_GROUP_ID
-	version = POM_VERSION
+	group = 'com.scalified'
+	version = '0.0.4'
 
 	repositories {
 		mavenCentral()

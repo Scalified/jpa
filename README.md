@@ -127,7 +127,7 @@ Person person = new Person(Gender.FEMALE, 20);
 Specification<Person> isYoungSpecification = new IsYoungSpecification();
 boolean isYoung = isYoungSpecification.isSatisfiedBy(person); // checks whether person satisfies specification
 
-List<Person> youngPersons = jpa.find(isYoungSpecification).all(); // finds all young persons
+List<Person> youngPersons = jpa.find(isYoungSpecification).list(); // finds list of young persons
 
 class IsFemaleSpecification implements Specification<Person> {
 
@@ -146,10 +146,10 @@ class IsFemaleSpecification implements Specification<Person> {
 Specification<Person> isFemaleSpecification = new IsFemaleSpecification();
 
 // Combining multiple specifications into one AND condition specification
-List<Person> youngFemalePersons = jpa.find(new AndSpecification<>(isYoungSpecification, isFemaleSpecification)).all();
+List<Person> youngFemalePersons = jpa.find(new AndSpecification<>(isYoungSpecification, isFemaleSpecification)).list();
 
 // Combining multiple specifications into one OR condition specification
-List<Person> youngOrFemalePersons = jpa.find(new OrSpecification<>(isYoungSpecification, isFemaleSpecification)).all();
+List<Person> youngOrFemalePersons = jpa.find(new OrSpecification<>(isYoungSpecification, isFemaleSpecification)).list();
 ```
 
 ### From DSL

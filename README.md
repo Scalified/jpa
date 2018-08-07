@@ -15,7 +15,7 @@ The Library requires [Java SE Development Kit 8](http://www.oracle.com/technetwo
 
 ```java
 dependencies {
-	compile 'com.scalified:jpa:0.0.5'
+	compile 'com.scalified:jpa:0.0.6'
 }
 ```
 
@@ -121,6 +121,11 @@ class IsYoungSpecification implements Specification<Person> {
         return builder.lessThan(root.get(Person._age), MAX_YOUNG_AGE_YEARS);
     }
 
+    @Override
+    public Class<Person> getType() {
+        return Person.class;
+    }
+
 }
 
 Person person = new Person(Gender.FEMALE, 20);
@@ -139,6 +144,11 @@ class IsFemaleSpecification implements Specification<Person> {
     @Override
     public Predicate toPredicate(CriteriaBuilder builder, Root<Person> root) {
         return builder.equal(root.get(Person._gender), Gender.FEMALE);
+    }
+
+    @Override
+    public Class<Person> getType() {
+        return Person.class;
     }
 
 }

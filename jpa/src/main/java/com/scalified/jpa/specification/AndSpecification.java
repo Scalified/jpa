@@ -28,6 +28,7 @@ package com.scalified.jpa.specification;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 
 /**
@@ -81,6 +82,18 @@ public class AndSpecification<T> implements Specification<T> {
 				.map(specification -> specification.toPredicate(builder, root))
 				.toArray(Predicate[]::new);
 		return builder.and(predicates);
+	}
+
+	/**
+	 * Returns the current {@link Specification} type
+	 *
+	 * @return current {@link Specification} type
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Class<T> getType() {
+		return (Class<T>) ((ParameterizedType) getClass()
+				.getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 
 }

@@ -1,3 +1,7 @@
+# 0.0.6
+
+* [**#16** Fix Specification getType() member](https://github.com/Scalified/jpa/issues/16)
+
 # 0.0.5
 
 * [**#10** Contravariance / Covariance Absent](https://github.com/Scalified/jpa/issues/10)

@@ -28,7 +28,6 @@ package com.scalified.jpa.specification;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.lang.reflect.ParameterizedType;
 
 /**
  * Describes specifications based on specification pattern
@@ -63,10 +62,6 @@ public interface Specification<T> {
 	 *
 	 * @return current {@link Specification} type
 	 */
-	@SuppressWarnings("unchecked")
-	default Class<T> getType() {
-		ParameterizedType type = (ParameterizedType) this.getClass().getGenericSuperclass();
-		return (Class<T>) type.getActualTypeArguments()[0];
-	}
+	Class<T> getType();
 
 }

@@ -1,7 +1,7 @@
 # JPA Java Library
 
 [![Build Status](https://travis-ci.org/Scalified/jpa.svg)](https://travis-ci.org/Scalified/jpa)
-[![Maven Central](https://img.shields.io/maven-central/v/com.scalified/jpa.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.scalified%22%20AND%20a%3A%22jpa%22)
+[![Maven Central](https://img.shields.io/maven-central/v/com.scalified/jpa.svg)](https://search.maven.org/search?q=g:com.scalified%20AND%20a:jpa&core=gav)
 
 ## Description
 
@@ -15,7 +15,7 @@ The Library requires [Java SE Development Kit 8](http://www.oracle.com/technetwo
 
 ```java
 dependencies {
-	compile 'com.scalified:jpa:0.0.6'
+	compile "com.scalified:jpa:$VERSION"
 }
 ```
 
@@ -97,6 +97,13 @@ Set<Person> personSet = jpa.find(builder -> {
     Root<Person> root = criteriaQuery.from(Person.class);
     return criteriaQuery.select(root);
 }).set();
+
+// Finding entities by criteria function and mapping results to stream
+Stream<Person> personStream = jpa.find(builder -> {
+    CriteriaQuery<Person> criteriaQuery = builder.createQuery(Person.class);
+    Root<Person> root = criteriaQuery.from(Person.class);
+    return criteriaQuery.select(root);
+}).stream();
 
 // Finding optional entity
 Optional<Person> person = jpa.find(builder -> {

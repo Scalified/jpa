@@ -32,6 +32,7 @@ import com.scalified.jpa.specification.Specification;
 
 import javax.persistence.EntityManager;
 import java.util.Collection;
+import java.util.stream.Stream;
 
 /**
  * Declares available operations on entity used by <b>DSL</b>
@@ -65,6 +66,26 @@ public interface JpaManager {
 	 * @return generic result object
 	 */
 	<T, R> R find(CriteriaFunction<T> criteriaFunction, ResultFunction<T, R> resultFunction);
+
+	/**
+	 * Returns the <b>Stream</b> of generic results found by the specified <b>criteriaFunction</b>
+	 *
+	 * @param criteriaFunction a function to find result
+	 * @param <T>              type of an entity
+	 * @return <b>Stream</b> of generic results
+	 */
+	<T> Stream<T> find(CriteriaFunction<T> criteriaFunction);
+
+	/**
+	 * Returns the <b>Stream</b> of generic results found by the specified <b>criteriaFunction</b>
+	 * which has the specified <b>chunkSize</b>
+	 *
+	 * @param criteriaFunction a function to find result
+	 * @param chunkSize        size of chunk
+	 * @param <T>              type of an entity
+	 * @return <b>Stream</b> of generic results
+	 */
+	<T> Stream<T> find(CriteriaFunction<T> criteriaFunction, int chunkSize);
 
 	/**
 	 * Returns the generic result found by the specified <b>specification</b> and

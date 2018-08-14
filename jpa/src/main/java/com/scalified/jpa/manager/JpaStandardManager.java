@@ -39,6 +39,8 @@ import javax.persistence.criteria.Root;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * A standard implementation of the {@link JpaManager}
@@ -93,6 +95,38 @@ public class JpaStandardManager implements JpaManager {
 		CriteriaQuery<T> criteriaQuery = criteriaFunction.apply(builder);
 		TypedQuery<T> query = em.createQuery(criteriaQuery);
 		return resultFunction.apply(query);
+	}
+
+	/**
+	 * Returns the <b>Stream</b> of generic results found by the specified <b>criteriaFunction</b>
+	 *
+	 * @param criteriaFunction a function to find result
+	 * @param <T>              type of an entity
+	 * @return <b>Stream</b> of generic results
+	 */
+	@Override
+	public <T> Stream<T> find(CriteriaFunction<T> criteriaFunction) {
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<T> criteriaQuery = criteriaFunction.apply(builder);
+		TypedQuery<T> query = em.createQuery(criteriaQuery);
+		return StreamSupport.stream(new EntitySpliterator<>(query), false);
+	}
+
+	/**
+	 * Returns the <b>Stream</b> of generic results found by the specified <b>criteriaFunction</b>
+	 * which has the specified <b>chunkSize</b>
+	 *
+	 * @param criteriaFunction a function to find result
+	 * @param chunkSize        size of chunk
+	 * @param <T>              type of an entity
+	 * @return <b>Stream</b> of generic results
+	 */
+	@Override
+	public <T> Stream<T> find(CriteriaFunction<T> criteriaFunction, int chunkSize) {
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<T> criteriaQuery = criteriaFunction.apply(builder);
+		TypedQuery<T> query = em.createQuery(criteriaQuery);
+		return StreamSupport.stream(new EntitySpliterator<>(query, chunkSize), false);
 	}
 
 	/**

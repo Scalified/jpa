@@ -25,20 +25,25 @@
 
 package com.scalified.jpa.manager;
 
+import com.scalified.jpa.commons.EntitySpliterator;
 import com.scalified.jpa.function.CriteriaFunction;
 import com.scalified.jpa.function.ExpressionFunction;
 import com.scalified.jpa.function.ResultFunction;
+import com.scalified.jpa.sp.SpQuery;
 import com.scalified.jpa.specification.Specification;
 
 import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.Collection;
-import java.util.LinkedHashSet;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * A standard implementation of the {@link JpaManager}
@@ -96,6 +101,38 @@ public class JpaStandardManager implements JpaManager {
 	}
 
 	/**
+	 * Returns the <b>Stream</b> of generic results found by the specified <b>criteriaFunction</b>
+	 *
+	 * @param criteriaFunction a function to find result
+	 * @param <T>              type of an entity
+	 * @return <b>Stream</b> of generic results
+	 */
+	@Override
+	public <T> Stream<T> find(CriteriaFunction<T> criteriaFunction) {
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<T> criteriaQuery = criteriaFunction.apply(builder);
+		TypedQuery<T> query = em.createQuery(criteriaQuery);
+		return StreamSupport.stream(new EntitySpliterator<>(query), false);
+	}
+
+	/**
+	 * Returns the <b>Stream</b> of generic results found by the specified <b>criteriaFunction</b>
+	 * which has the specified <b>chunkSize</b>
+	 *
+	 * @param criteriaFunction a function to find result
+	 * @param chunkSize        size of chunk
+	 * @param <T>              type of an entity
+	 * @return <b>Stream</b> of generic results
+	 */
+	@Override
+	public <T> Stream<T> find(CriteriaFunction<T> criteriaFunction, int chunkSize) {
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<T> criteriaQuery = criteriaFunction.apply(builder);
+		TypedQuery<T> query = em.createQuery(criteriaQuery);
+		return StreamSupport.stream(new EntitySpliterator<>(query, chunkSize), false);
+	}
+
+	/**
 	 * Returns the generic result found by the specified <b>specification</b> and
 	 * derived from applying the specified <b>resultFunction</b>
 	 *
@@ -114,6 +151,46 @@ public class JpaStandardManager implements JpaManager {
 		Predicate predicate = specification.toPredicate(builder, root);
 		TypedQuery<T> query = em.createQuery(criteriaQuery.where(predicate));
 		return resultFunction.apply(query);
+	}
+
+	/**
+	 * Returns the raw result as a list containing column values in
+	 * array of objects produced by stored procedure execution built
+	 * from the specified <b>spQuery</b>
+	 *
+	 * @param spQuery stored procedure configuration object
+	 * @param <T>     type of result
+	 * @return the raw result as a list containing column values in
+	 * array of objects
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public <T> List<Object[]> query(SpQuery<T> spQuery) {
+		StoredProcedureQuery query;
+
+		if (Objects.nonNull(spQuery.getResultClasses())) {
+			query = em.createStoredProcedureQuery(spQuery.getName(), spQuery.getResultClasses());
+		} else if (Objects.nonNull(spQuery.getResultMappings())) {
+			query = em.createStoredProcedureQuery(spQuery.getName(), spQuery.getResultMappings());
+		} else {
+			query = em.createStoredProcedureQuery(spQuery.getName());
+		}
+
+		spQuery.getParams()
+				.forEach(param -> {
+					if (param.getMode() == ParameterMode.REF_CURSOR) {
+						query.registerStoredProcedureParameter(param.getName(), void.class, ParameterMode.REF_CURSOR);
+					} else if (Objects.nonNull(param.getValue())) {
+						query.registerStoredProcedureParameter(
+								param.getName(), param.getValue().getClass(), param.getMode()
+						);
+						if (param.getMode() == ParameterMode.IN) {
+							query.setParameter(param.getName(), param.getValue());
+						}
+					}
+				});
+
+		return query.execute() ? query.getResultList() : Collections.emptyList();
 	}
 
 	/**

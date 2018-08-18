@@ -34,6 +34,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * A {@link JpaFindByCriteriaFunctionDsl} implementation
@@ -83,6 +84,28 @@ public class JpaFindByCriteriaFunctionDslImpl<T> implements JpaFindByCriteriaFun
 	@Override
 	public Set<T> set() {
 		return new LinkedHashSet<>(list());
+	}
+
+	/**
+	 * Returns a stream of all found entities using previously defined {@link CriteriaFunction}
+	 *
+	 * @return a stream of all found entities
+	 */
+	@Override
+	public Stream<T> stream() {
+		return manager.find(function);
+	}
+
+	/**
+	 * Returns a stream of all found entities using previously defined {@link CriteriaFunction}
+	 * and the specified chunk size
+	 *
+	 * @param chunkSize size of a chunk
+	 * @return a stream of all found entities
+	 */
+	@Override
+	public Stream<T> stream(int chunkSize) {
+		return manager.find(function, chunkSize);
 	}
 
 	/**

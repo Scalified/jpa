@@ -27,5 +27,5 @@ apply plugin: 'java'
 apply plugin: 'maven-publish'
 
 dependencies {
-	compileOnly 'javax:javaee-api:8.0'
+	compileOnly 'javax:javaee-api:7.0'
 }

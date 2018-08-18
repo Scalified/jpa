@@ -31,6 +31,7 @@ import com.scalified.jpa.function.ResultFunction;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * <b>DSL</b> for finding entities using previously defined {@link CriteriaFunction}
@@ -54,6 +55,22 @@ public interface JpaFindByCriteriaFunctionDsl<T> {
 	 * @return a set of all found entities
 	 */
 	Set<T> set();
+
+	/**
+	 * Returns a stream of all found entities using previously defined {@link CriteriaFunction}
+	 *
+	 * @return a stream of all found entities
+	 */
+	Stream<T> stream();
+
+	/**
+	 * Returns a stream of all found entities using previously defined {@link CriteriaFunction}
+	 * and the specified chunk size
+	 *
+	 * @param chunkSize size of a chunk
+	 * @return a stream of all found entities
+	 */
+	Stream<T> stream(int chunkSize);
 
 	/**
 	 * Returns some generic result using previously defined {@link CriteriaFunction}

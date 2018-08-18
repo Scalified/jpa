@@ -28,13 +28,16 @@ package com.scalified.jpa.manager;
 import com.scalified.jpa.function.CriteriaFunction;
 import com.scalified.jpa.function.ExpressionFunction;
 import com.scalified.jpa.function.ResultFunction;
+import com.scalified.jpa.sp.SpQuery;
 import com.scalified.jpa.specification.Specification;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.util.Collection;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 /**
  * A {@link JpaManager} decorator, which adds transaction support
@@ -91,6 +94,32 @@ public class JpaTransactionalManager implements JpaManager {
 	}
 
 	/**
+	 * Returns the <b>Stream</b> of generic results found by the specified <b>criteriaFunction</b>
+	 *
+	 * @param criteriaFunction a function to find result
+	 * @param <T>              type of an entity
+	 * @return <b>Stream</b> of generic results
+	 */
+	@Override
+	public <T> Stream<T> find(CriteriaFunction<T> criteriaFunction) {
+		return manager.find(criteriaFunction);
+	}
+
+	/**
+	 * Returns the <b>Stream</b> of generic results found by the specified <b>criteriaFunction</b>
+	 * which has the specified <b>chunkSize</b>
+	 *
+	 * @param criteriaFunction a function to find result
+	 * @param chunkSize        size of chunk
+	 * @param <T>              type of an entity
+	 * @return <b>Stream</b> of generic results
+	 */
+	@Override
+	public <T> Stream<T> find(CriteriaFunction<T> criteriaFunction, int chunkSize) {
+		return manager.find(criteriaFunction, chunkSize);
+	}
+
+	/**
 	 * Returns the generic result found by the specified <b>specification</b> and
 	 * derived from applying the specified <b>resultFunction</b>
 	 *
@@ -104,6 +133,21 @@ public class JpaTransactionalManager implements JpaManager {
 	@Override
 	public <T, R> R find(Specification<T> specification, ResultFunction<T, R> resultFunction) {
 		return manager.find(specification, resultFunction);
+	}
+
+	/**
+	 * Returns the raw result as a list containing column values in
+	 * array of objects produced by stored procedure execution built
+	 * from the specified <b>spQuery</b>
+	 *
+	 * @param spQuery stored procedure configuration object
+	 * @param <T>     type of result
+	 * @return the raw result as a list containing column values in
+	 * array of objects
+	 */
+	@Override
+	public <T> List<Object[]> query(SpQuery<T> spQuery) {
+		return manager.query(spQuery);
 	}
 
 	/**

@@ -28,10 +28,13 @@ package com.scalified.jpa.manager;
 import com.scalified.jpa.function.CriteriaFunction;
 import com.scalified.jpa.function.ExpressionFunction;
 import com.scalified.jpa.function.ResultFunction;
+import com.scalified.jpa.sp.SpQuery;
 import com.scalified.jpa.specification.Specification;
 
 import javax.persistence.EntityManager;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Declares available operations on entity used by <b>DSL</b>
@@ -67,6 +70,26 @@ public interface JpaManager {
 	<T, R> R find(CriteriaFunction<T> criteriaFunction, ResultFunction<T, R> resultFunction);
 
 	/**
+	 * Returns the <b>Stream</b> of generic results found by the specified <b>criteriaFunction</b>
+	 *
+	 * @param criteriaFunction a function to find result
+	 * @param <T>              type of an entity
+	 * @return <b>Stream</b> of generic results
+	 */
+	<T> Stream<T> find(CriteriaFunction<T> criteriaFunction);
+
+	/**
+	 * Returns the <b>Stream</b> of generic results found by the specified <b>criteriaFunction</b>
+	 * which has the specified <b>chunkSize</b>
+	 *
+	 * @param criteriaFunction a function to find result
+	 * @param chunkSize        size of chunk
+	 * @param <T>              type of an entity
+	 * @return <b>Stream</b> of generic results
+	 */
+	<T> Stream<T> find(CriteriaFunction<T> criteriaFunction, int chunkSize);
+
+	/**
 	 * Returns the generic result found by the specified <b>specification</b> and
 	 * derived from applying the specified <b>resultFunction</b>
 	 *
@@ -78,6 +101,18 @@ public interface JpaManager {
 	 * @return generic result object
 	 */
 	<T, R> R find(Specification<T> specification, ResultFunction<T, R> resultFunction);
+
+	/**
+	 * Returns the raw result as a list containing column values in
+	 * array of objects produced by stored procedure execution built
+	 * from the specified <b>spQuery</b>
+	 *
+	 * @param spQuery stored procedure configuration object
+	 * @param <T>     type of result
+	 * @return the raw result as a list containing column values in
+	 * array of objects
+	 */
+	<T> List<Object[]> query(SpQuery<T> spQuery);
 
 	/**
 	 * Returns the count of all entities with the specified <b>entityClass</b>

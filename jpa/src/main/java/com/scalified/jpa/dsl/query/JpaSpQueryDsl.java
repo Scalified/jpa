@@ -1,5 +1,3 @@
-import java.nio.charset.StandardCharsets
-
 /*
  * MIT License
  *
@@ -25,19 +23,49 @@ import java.nio.charset.StandardCharsets
  *
  */
 
-allprojects {
+package com.scalified.jpa.dsl.query;
 
-	group = 'com.scalified'
-	version = '1.0.0'
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
-	repositories {
-		mavenCentral()
-	}
+/**
+ * <b>DSL</b> for executing stored procedures
+ *
+ * @author shell
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+public interface JpaSpQueryDsl<T> {
 
-	tasks.withType(JavaCompile) {
-		sourceCompatibility = JavaVersion.VERSION_1_8
-		targetCompatibility = JavaVersion.VERSION_1_8
-		options.encoding = StandardCharsets.UTF_8.name()
-	}
+	/**
+	 * Returns a list of all results produced by stored procedure execution
+	 *
+	 * @return a list of all results
+	 */
+	List<T> list();
+
+	/**
+	 * Returns a set of all results produced by stored procedure execution
+	 *
+	 * @return a set of all results
+	 */
+	Set<T> set();
+
+	/**
+	 * Returns the first result produced by stored procedure execution
+	 *
+	 * @return the first result
+	 */
+	Optional<T> first();
+
+	/**
+	 * Returns the raw result as a list containing column values in
+	 * array of objects produced by stored procedure execution
+	 *
+	 * @return the raw result as a list containing column values in
+	 * array of objects
+	 */
+	List<Object[]> raw();
 
 }

@@ -104,6 +104,8 @@ Stream<Person> personStream = jpa.find(builder -> {
     Root<Person> root = criteriaQuery.from(Person.class);
     return criteriaQuery.select(root);
 }).stream();
+// Under the hood, stream executes jpa queries for each chunk.
+// In case if table is populated or modified during stream consuming, the new data will also be included into result set.
 
 // Finding optional entity
 Optional<Person> person = jpa.find(builder -> {
@@ -167,6 +169,36 @@ List<Person> youngFemalePersons = jpa.find(new AndSpecification<>(isYoungSpecifi
 
 // Combining multiple specifications into one OR condition specification
 List<Person> youngOrFemalePersons = jpa.find(new OrSpecification<>(isYoungSpecification, isFemaleSpecification)).list();
+```
+
+### Query DSL
+
+**Query** DSL provides convenient way of stored procedure queries execution
+
+```java
+Jpa jpa;
+// ... jpa initialization skipped
+
+// Building stored procedure query configuration object
+SpQuery<String> query = SpQuery.<String>builder("SOME_PROCEDURE")
+				.withInParam("FIRST_PARAM", "FIRST_PARAM_VALUE")
+				.withInParam("SECOND_PARAM", Arrays.asList("ONE", "TWO", "THREE"))
+				.withRefCursorParam("THIRD_PARAM")
+				.withParam("FOURTH_PARAM", ParameterMode.IN, "FOUR")
+				.withResultClasses(SomeResultClass.class)
+				.build();
+
+// Calling stored procedure and mapping results to set
+Set<String> resultSet = jpa.query(query).set();
+
+// Calling stored procedure and mapping results to list
+List<String> resultList = jpa.query(query).list();
+
+// Calling stored procedure and retrieving optional result
+Optional<String> optionalResult = jpa.query(query).first();
+
+// Calling stored procedure and retrieving raw result
+List<Object[]> rawResult = jpa.query(query).raw();
 ```
 
 ### From DSL

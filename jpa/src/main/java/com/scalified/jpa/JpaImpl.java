@@ -32,9 +32,12 @@ import com.scalified.jpa.dsl.entity.JpaEntityDslImpl;
 import com.scalified.jpa.dsl.find.*;
 import com.scalified.jpa.dsl.from.JpaFromDsl;
 import com.scalified.jpa.dsl.from.JpaFromDslImpl;
+import com.scalified.jpa.dsl.query.JpaSpQueryDsl;
+import com.scalified.jpa.dsl.query.JpaSpQueryDslImpl;
 import com.scalified.jpa.function.CriteriaFunction;
 import com.scalified.jpa.manager.JpaManager;
 import com.scalified.jpa.manager.JpaStandardManager;
+import com.scalified.jpa.sp.SpQuery;
 import com.scalified.jpa.specification.Specification;
 
 import javax.persistence.EntityManager;
@@ -111,6 +114,19 @@ public class JpaImpl implements Jpa {
 	@Override
 	public <T> JpaFindBySpecificationDsl<T> find(Specification<T> specification) {
 		return new JpaFindBySpecificationDslImpl<>(manager, specification);
+	}
+
+	/**
+	 * Returns {@link JpaSpQueryDsl} object, which provides the next <b>DSL</b>
+	 * methods within <b>DSL</b> call chain to execute stored procedure
+	 *
+	 * @param spQuery stored procedure configuration object
+	 * @param <T>     type of result
+	 * @return {@link JpaSpQueryDsl} object
+	 */
+	@Override
+	public <T> JpaSpQueryDsl<T> query(SpQuery<T> spQuery) {
+		return new JpaSpQueryDslImpl<>(manager, spQuery);
 	}
 
 	/**

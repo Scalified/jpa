@@ -28,10 +28,12 @@ package com.scalified.jpa.manager;
 import com.scalified.jpa.function.CriteriaFunction;
 import com.scalified.jpa.function.ExpressionFunction;
 import com.scalified.jpa.function.ResultFunction;
+import com.scalified.jpa.sp.SpQuery;
 import com.scalified.jpa.specification.Specification;
 
 import javax.persistence.EntityManager;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -99,6 +101,18 @@ public interface JpaManager {
 	 * @return generic result object
 	 */
 	<T, R> R find(Specification<T> specification, ResultFunction<T, R> resultFunction);
+
+	/**
+	 * Returns the raw result as a list containing column values in
+	 * array of objects produced by stored procedure execution built
+	 * from the specified <b>spQuery</b>
+	 *
+	 * @param spQuery stored procedure configuration object
+	 * @param <T>     type of result
+	 * @return the raw result as a list containing column values in
+	 * array of objects
+	 */
+	<T> List<Object[]> query(SpQuery<T> spQuery);
 
 	/**
 	 * Returns the count of all entities with the specified <b>entityClass</b>

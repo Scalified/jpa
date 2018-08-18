@@ -1,5 +1,6 @@
-# 0.0.7
+# 1.0.0
 
+* [**#4** Add Stored Procedure Feature](https://github.com/Scalified/jpa/issues/4)
 * [**#9** Add Stream Support](https://github.com/Scalified/jpa/issues/9)
 
 # 0.0.6

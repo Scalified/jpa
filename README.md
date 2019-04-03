@@ -130,11 +130,6 @@ class IsYoungSpecification implements Specification<Person> {
         return builder.lessThan(root.get(Person._age), MAX_YOUNG_AGE_YEARS);
     }
 
-    @Override
-    public Class<Person> getType() {
-        return Person.class;
-    }
-
 }
 
 Person person = new Person(Gender.FEMALE, 20);
@@ -155,20 +150,15 @@ class IsFemaleSpecification implements Specification<Person> {
         return builder.equal(root.get(Person._gender), Gender.FEMALE);
     }
 
-    @Override
-    public Class<Person> getType() {
-        return Person.class;
-    }
-
 }
 
 Specification<Person> isFemaleSpecification = new IsFemaleSpecification();
 
 // Combining multiple specifications into one AND condition specification
-List<Person> youngFemalePersons = jpa.find(new AndSpecification<>(isYoungSpecification, isFemaleSpecification)).list();
+List<Person> youngFemalePersons = jpa.find(AndSpecification.of(isYoungSpecification, isFemaleSpecification)).list();
 
 // Combining multiple specifications into one OR condition specification
-List<Person> youngOrFemalePersons = jpa.find(new OrSpecification<>(isYoungSpecification, isFemaleSpecification)).list();
+List<Person> youngOrFemalePersons = jpa.find(OrSpecification.of(isYoungSpecification, isFemaleSpecification)).list();
 ```
 
 ### Query DSL

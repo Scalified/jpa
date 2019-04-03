@@ -1,3 +1,7 @@
+# 1.1.0
+
+* [**#20** Specification API](https://github.com/Scalified/jpa/issues/20)
+
 # 1.0.0
 
 * [**#4** Add Stored Procedure Feature](https://github.com/Scalified/jpa/issues/4)

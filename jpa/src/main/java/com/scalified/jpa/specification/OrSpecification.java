@@ -28,8 +28,8 @@ package com.scalified.jpa.specification;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * A {@link Specification} <b>or</b> clause combiner
@@ -43,15 +43,14 @@ public class OrSpecification<T> implements Specification<T> {
 	/**
 	 * Specifications to combine
 	 */
-	private final Specification<T>[] specifications;
+	private final Collection<? extends Specification<T>> specifications;
 
 	/**
 	 * Creates {@link OrSpecification} instance
 	 *
 	 * @param specifications specifications to combine
 	 */
-	@SafeVarargs
-	public OrSpecification(Specification<T>... specifications) {
+	private OrSpecification(Collection<? extends Specification<T>> specifications) {
 		this.specifications = specifications;
 	}
 
@@ -65,7 +64,7 @@ public class OrSpecification<T> implements Specification<T> {
 	 */
 	@Override
 	public boolean isSatisfiedBy(T what) {
-		return Arrays.stream(specifications)
+		return specifications.stream()
 				.anyMatch(specification -> specification.isSatisfiedBy(what));
 	}
 
@@ -78,22 +77,23 @@ public class OrSpecification<T> implements Specification<T> {
 	 */
 	@Override
 	public Predicate toPredicate(CriteriaBuilder builder, Root<T> root) {
-		Predicate[] predicates = Arrays.stream(specifications)
+		Predicate[] predicates = specifications.stream()
 				.map(specification -> specification.toPredicate(builder, root))
 				.toArray(Predicate[]::new);
 		return builder.or(predicates);
 	}
 
 	/**
-	 * Returns the current {@link Specification} type
+	 * Creates {@link OrSpecification} instance
 	 *
-	 * @return current {@link Specification} type
+	 * @param specifications specifications to combine
+	 * @param <T>            entity type
+	 * @param <S>            specification type
+	 * @return {@link OrSpecification} instance
 	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Class<T> getType() {
-		return (Class<T>) ((ParameterizedType) getClass()
-				.getGenericSuperclass()).getActualTypeArguments()[0];
+	@SafeVarargs
+	public static <T, S extends Specification<T>> OrSpecification<T> of(S... specifications) {
+		return new OrSpecification<>(Arrays.asList(specifications));
 	}
 
 }

@@ -28,6 +28,7 @@ package com.scalified.jpa.specification;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.lang.reflect.ParameterizedType;
 
 /**
  * Describes specifications based on specification pattern
@@ -36,6 +37,7 @@ import javax.persistence.criteria.Root;
  * @version 1.0.0
  * @since 1.0.0
  */
+@FunctionalInterface
 public interface Specification<T> {
 
 	/**
@@ -46,7 +48,9 @@ public interface Specification<T> {
 	 * @return <b>true</b> if the specified object matches the current {@link Specification},
 	 * <b>false</b> otherwise
 	 */
-	boolean isSatisfiedBy(T what);
+	default boolean isSatisfiedBy(T what) {
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Constructs the {@link Predicate} from the current {@link Specification}
@@ -62,6 +66,10 @@ public interface Specification<T> {
 	 *
 	 * @return current {@link Specification} type
 	 */
-	Class<T> getType();
+	@SuppressWarnings("unchecked")
+	default Class<T> getType() {
+		return (Class<T>) ((ParameterizedType) getClass()
+				.getGenericSuperclass()).getActualTypeArguments()[0];
+	}
 
 }

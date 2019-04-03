@@ -28,8 +28,8 @@ package com.scalified.jpa.specification;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * A {@link Specification} <b>and</b> clause combiner
@@ -43,15 +43,14 @@ public class AndSpecification<T> implements Specification<T> {
 	/**
 	 * Specifications to combine
 	 */
-	private final Specification<T>[] specifications;
+	private final Collection<? extends Specification<T>> specifications;
 
 	/**
 	 * Creates {@link AndSpecification} instance
 	 *
 	 * @param specifications specifications to combine
 	 */
-	@SafeVarargs
-	public AndSpecification(Specification<T>... specifications) {
+	private AndSpecification(Collection<? extends Specification<T>> specifications) {
 		this.specifications = specifications;
 	}
 
@@ -65,7 +64,7 @@ public class AndSpecification<T> implements Specification<T> {
 	 */
 	@Override
 	public boolean isSatisfiedBy(T what) {
-		return Arrays.stream(specifications)
+		return specifications.stream()
 				.allMatch(specification -> specification.isSatisfiedBy(what));
 	}
 
@@ -78,22 +77,23 @@ public class AndSpecification<T> implements Specification<T> {
 	 */
 	@Override
 	public Predicate toPredicate(CriteriaBuilder builder, Root<T> root) {
-		Predicate[] predicates = Arrays.stream(specifications)
+		Predicate[] predicates = specifications.stream()
 				.map(specification -> specification.toPredicate(builder, root))
 				.toArray(Predicate[]::new);
 		return builder.and(predicates);
 	}
 
 	/**
-	 * Returns the current {@link Specification} type
+	 * Creates {@link AndSpecification} instance
 	 *
-	 * @return current {@link Specification} type
+	 * @param specifications specifications to combine
+	 * @param <T>            entity type
+	 * @param <S>            specification type
+	 * @return {@link AndSpecification} instance
 	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Class<T> getType() {
-		return (Class<T>) ((ParameterizedType) getClass()
-				.getGenericSuperclass()).getActualTypeArguments()[0];
+	@SafeVarargs
+	public static <T, S extends Specification<T>> AndSpecification<T> of(S... specifications) {
+		return new AndSpecification<>(Arrays.asList(specifications));
 	}
 
 }

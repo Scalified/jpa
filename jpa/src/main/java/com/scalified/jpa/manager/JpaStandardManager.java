@@ -223,7 +223,7 @@ public class JpaStandardManager implements JpaManager {
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<Long> criteriaQuery = builder.createQuery(Long.class);
 		Root<T> root = criteriaQuery.from(entityClass);
-		criteriaQuery.select(builder.count(criteriaQuery.from(entityClass))).where(function.apply(builder, root));
+		criteriaQuery.select(builder.count(root)).where(function.apply(builder, root));
 		TypedQuery<Long> query = em.createQuery(criteriaQuery);
 		return query.getSingleResult();
 	}

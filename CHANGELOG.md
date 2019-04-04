@@ -1,3 +1,7 @@
+# 1.1.1
+
+* [**#22** Unexpected CROSS JOIN on count with function call](https://github.com/Scalified/jpa/issues/22)
+
 # 1.1.0
 
 * [**#20** Specification API](https://github.com/Scalified/jpa/issues/20)

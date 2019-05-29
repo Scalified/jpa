@@ -40,8 +40,7 @@ import java.util.stream.Stream;
  * A {@link JpaFindByCriteriaFunctionDsl} implementation
  *
  * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @since 2018-02-06
  */
 public class JpaFindByCriteriaFunctionDslImpl<T> implements JpaFindByCriteriaFunctionDsl<T> {
 
@@ -87,30 +86,8 @@ public class JpaFindByCriteriaFunctionDslImpl<T> implements JpaFindByCriteriaFun
 	}
 
 	/**
-	 * Returns a stream of all found entities using previously defined {@link CriteriaFunction}
-	 *
-	 * @return a stream of all found entities
-	 */
-	@Override
-	public Stream<T> stream() {
-		return manager.find(function);
-	}
-
-	/**
-	 * Returns a stream of all found entities using previously defined {@link CriteriaFunction}
-	 * and the specified chunk size
-	 *
-	 * @param chunkSize size of a chunk
-	 * @return a stream of all found entities
-	 */
-	@Override
-	public Stream<T> stream(int chunkSize) {
-		return manager.find(function, chunkSize);
-	}
-
-	/**
 	 * Returns some generic result using previously defined {@link CriteriaFunction}
-	 * and after applying the specified <b>resultFunction</b>
+	 * and after applying the specified {@code resultFunction}
 	 *
 	 * @param resultFunction a function to apply on result
 	 * @param <R>            type of generic result
@@ -119,6 +96,28 @@ public class JpaFindByCriteriaFunctionDslImpl<T> implements JpaFindByCriteriaFun
 	@Override
 	public <R> R some(ResultFunction<T, R> resultFunction) {
 		return manager.find(function, resultFunction);
+	}
+
+	/**
+	 * Returns a stream of all found entities using previously defined {@link CriteriaFunction}
+	 *
+	 * @return a stream of all found entities
+	 */
+	@Override
+	public Stream<T> stream() {
+		return manager.stream(function);
+	}
+
+	/**
+	 * Returns a stream of all found entities using previously defined {@link CriteriaFunction}
+	 * and the specified {@code chunkSize}
+	 *
+	 * @param chunkSize size of a chunk
+	 * @return a stream of all found entities
+	 */
+	@Override
+	public Stream<T> stream(int chunkSize) {
+		return manager.stream(function, chunkSize);
 	}
 
 	/**

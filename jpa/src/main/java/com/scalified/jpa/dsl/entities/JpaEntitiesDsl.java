@@ -31,8 +31,7 @@ import java.util.Collection;
  * <b>DSL</b> for working with collection of entities
  *
  * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @since 2018-02-06
  */
 public interface JpaEntitiesDsl<T> {
 

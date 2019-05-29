@@ -32,8 +32,7 @@ import com.scalified.jpa.manager.JpaManager;
  * A {@link JpaFromDsl} implementation
  *
  * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @since 2018-02-06
  */
 public class JpaFromDslImpl<T> implements JpaFromDsl<T> {
 
@@ -70,11 +69,11 @@ public class JpaFromDslImpl<T> implements JpaFromDsl<T> {
 
 	/**
 	 * Returns count of entities with previously defined class, filtered by
-	 * the specified expression <b>function</b>
+	 * the specified expression {@code function}
 	 *
-	 * @param function an expression <b>function</b> to filter entities
+	 * @param function an expression {@code function} to filter entities
 	 * @return count of entities with previously defined class, filtered by
-	 * the specified expression <b>function</b>
+	 * the specified expression {@code function}
 	 */
 	@Override
 	public long count(ExpressionFunction<T> function) {

@@ -29,8 +29,7 @@ package com.scalified.jpa.dsl.entity;
  * <b>DSL</b> for working with single entity
  *
  * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @since 2018-02-06
  */
 public interface JpaEntityDsl<T> {
 

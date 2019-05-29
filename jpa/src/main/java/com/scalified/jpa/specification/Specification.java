@@ -34,19 +34,18 @@ import java.lang.reflect.ParameterizedType;
  * Describes specifications based on specification pattern
  *
  * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @since 2018-02-17
  */
 @FunctionalInterface
 public interface Specification<T> {
 
 	/**
-	 * Returns <b>true</b> if the specified object matches the current {@link Specification},
-	 * otherwise returns <b>false</b>
+	 * Returns {@code true} if the specified object matches the current {@link Specification},
+	 * otherwise returns {@code false}
 	 *
 	 * @param what an object to check {@link Specification} matching
-	 * @return <b>true</b> if the specified object matches the current {@link Specification},
-	 * <b>false</b> otherwise
+	 * @return {@code true} if the specified object matches the current {@link Specification},
+	 * {@code false} otherwise
 	 */
 	default boolean isSatisfiedBy(T what) {
 		throw new UnsupportedOperationException();

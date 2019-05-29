@@ -1,5 +1,3 @@
-import java.nio.charset.StandardCharsets
-
 /*
  * MIT License
  *
@@ -25,19 +23,11 @@ import java.nio.charset.StandardCharsets
  *
  */
 
-allprojects {
+plugins {
+	`java-library`
+	id("maven-publish")
+}
 
-	group = 'com.scalified'
-	version = '1.1.1'
-
-	repositories {
-		mavenCentral()
-	}
-
-	tasks.withType(JavaCompile) {
-		sourceCompatibility = JavaVersion.VERSION_1_8
-		targetCompatibility = JavaVersion.VERSION_1_8
-		options.encoding = StandardCharsets.UTF_8.name()
-	}
-
+dependencies {
+	compileOnly("javax:javaee-api:${extra["javaeeVersion"]}")
 }

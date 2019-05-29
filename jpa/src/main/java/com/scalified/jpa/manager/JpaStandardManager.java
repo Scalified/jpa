@@ -49,8 +49,7 @@ import java.util.stream.StreamSupport;
  * A standard implementation of the {@link JpaManager}
  *
  * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @since 2018-02-06
  */
 public class JpaStandardManager implements JpaManager {
 
@@ -69,7 +68,7 @@ public class JpaStandardManager implements JpaManager {
 	}
 
 	/**
-	 * Returns an entity found by its <b>primaryKey</b>
+	 * Returns an entity found by its {@code primaryKey}
 	 *
 	 * @param entityClass a class of a searched entity
 	 * @param primaryKey  a primary key of a searched entity
@@ -77,16 +76,84 @@ public class JpaStandardManager implements JpaManager {
 	 * @param <K>         type of a primary key of a searched entity
 	 * @return entity object
 	 */
+	@Override
 	public <T, K> T find(Class<T> entityClass, K primaryKey) {
 		return em.find(entityClass, primaryKey);
 	}
 
 	/**
-	 * Returns the generic result found by the specified <b>criteriaFunction</b> and
-	 * derived from applying the specified <b>resultFunction</b>
+	 * Returns the {@link List} of all generic results found by the specified
+	 * {@code entityClass}
+	 *
+	 * @param entityClass a class of a searched entity
+	 * @param <T>         type of searched entity
+	 * @return {@link List} of all generic results
+	 */
+	@Override
+	public <T> List<T> find(Class<T> entityClass) {
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<T> criteriaQuery = builder.createQuery(entityClass);
+		TypedQuery<T> query = em.createQuery(criteriaQuery);
+		return query.getResultList();
+	}
+
+	/**
+	 * Returns the generic result found by the specified {@code entityClass}
+	 * and derived from applying the specified {@code resultFunction}
+	 *
+	 * @param entityClass    a class of a searched entity
+	 * @param resultFunction a function, which maps {@link CriteriaBuilder}
+	 *                       to a generic result
+	 * @param <T>            type of an entity
+	 * @param <R>            type of the result
+	 * @return generic result object
+	 */
+	@Override
+	public <T, R> R find(Class<T> entityClass, ResultFunction<T, R> resultFunction) {
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<T> criteriaQuery = builder.createQuery(entityClass);
+		TypedQuery<T> query = em.createQuery(criteriaQuery);
+		return resultFunction.apply(query);
+	}
+
+	/**
+	 * Returns the {@link Stream} of generic results found by the specified {@code entityClass}
+	 *
+	 * @param entityClass a class of a searched entity
+	 * @param <T>         type of searched entity
+	 * @return {@link Stream} of generic results
+	 */
+	@Override
+	public <T> Stream<T> stream(Class<T> entityClass) {
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<T> criteriaQuery = builder.createQuery(entityClass);
+		TypedQuery<T> query = em.createQuery(criteriaQuery);
+		return StreamSupport.stream(new EntitySpliterator<>(query), false);
+	}
+
+	/**
+	 * Returns the {@link Stream} of generic results found by the specified {@code entityClass},
+	 * which has the specified {@code chunkSize}
+	 *
+	 * @param entityClass a class of a searched entity
+	 * @param chunkSize   size of chunk
+	 * @param <T>         type of searched entity
+	 * @return {@link Stream} of generic results
+	 */
+	@Override
+	public <T> Stream<T> stream(Class<T> entityClass, int chunkSize) {
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<T> criteriaQuery = builder.createQuery(entityClass);
+		TypedQuery<T> query = em.createQuery(criteriaQuery);
+		return StreamSupport.stream(new EntitySpliterator<>(query, chunkSize), false);
+	}
+
+	/**
+	 * Returns the generic result found by the specified {@code criteriaFunction} and
+	 * derived from applying the specified {@code resultFunction}
 	 *
 	 * @param criteriaFunction a function to find result
-	 * @param resultFunction   a function, which maps {@link javax.persistence.criteria.CriteriaBuilder}
+	 * @param resultFunction   a function, which maps {@link CriteriaBuilder}
 	 *                         to a generic result
 	 * @param <T>              type of an entity
 	 * @param <R>              type of the result
@@ -101,14 +168,14 @@ public class JpaStandardManager implements JpaManager {
 	}
 
 	/**
-	 * Returns the <b>Stream</b> of generic results found by the specified <b>criteriaFunction</b>
+	 * Returns the {@link Stream} of generic results found by the specified {@code criteriaFunction}
 	 *
 	 * @param criteriaFunction a function to find result
 	 * @param <T>              type of an entity
-	 * @return <b>Stream</b> of generic results
+	 * @return {@link Stream} of generic results
 	 */
 	@Override
-	public <T> Stream<T> find(CriteriaFunction<T> criteriaFunction) {
+	public <T> Stream<T> stream(CriteriaFunction<T> criteriaFunction) {
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<T> criteriaQuery = criteriaFunction.apply(builder);
 		TypedQuery<T> query = em.createQuery(criteriaQuery);
@@ -116,16 +183,16 @@ public class JpaStandardManager implements JpaManager {
 	}
 
 	/**
-	 * Returns the <b>Stream</b> of generic results found by the specified <b>criteriaFunction</b>
-	 * which has the specified <b>chunkSize</b>
+	 * Returns the {@link Stream} of generic results found by the specified {@code criteriaFunction},
+	 * which has the specified {@code chunkSize}
 	 *
 	 * @param criteriaFunction a function to find result
 	 * @param chunkSize        size of chunk
 	 * @param <T>              type of an entity
-	 * @return <b>Stream</b> of generic results
+	 * @return {@link Stream} of generic results
 	 */
 	@Override
-	public <T> Stream<T> find(CriteriaFunction<T> criteriaFunction, int chunkSize) {
+	public <T> Stream<T> stream(CriteriaFunction<T> criteriaFunction, int chunkSize) {
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<T> criteriaQuery = criteriaFunction.apply(builder);
 		TypedQuery<T> query = em.createQuery(criteriaQuery);
@@ -133,11 +200,11 @@ public class JpaStandardManager implements JpaManager {
 	}
 
 	/**
-	 * Returns the generic result found by the specified <b>specification</b> and
-	 * derived from applying the specified <b>resultFunction</b>
+	 * Returns the generic result found by the specified {@code specification} and
+	 * derived from applying the specified {@code resultFunction}
 	 *
 	 * @param specification  a specification to find result
-	 * @param resultFunction a function, which maps {@link javax.persistence.criteria.CriteriaBuilder}
+	 * @param resultFunction a function, which maps {@link CriteriaBuilder}
 	 *                       to a generic result
 	 * @param <T>            type of an entity
 	 * @param <R>            type of the result
@@ -154,14 +221,12 @@ public class JpaStandardManager implements JpaManager {
 	}
 
 	/**
-	 * Returns the raw result as a list containing column values in
-	 * array of objects produced by stored procedure execution built
-	 * from the specified <b>spQuery</b>
+	 * Returns the raw result as a list containing column values in array of objects produced
+	 * by stored procedure execution built from the specified {@code spQuery}
 	 *
 	 * @param spQuery stored procedure configuration object
 	 * @param <T>     type of result
-	 * @return the raw result as a list containing column values in
-	 * array of objects
+	 * @return the raw result as a list containing column values in array of objects
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
@@ -194,7 +259,7 @@ public class JpaStandardManager implements JpaManager {
 	}
 
 	/**
-	 * Returns the count of all entities with the specified <b>entityClass</b>
+	 * Returns the count of all entities with the specified {@code entityClass}
 	 *
 	 * @param entityClass a class of an entity
 	 * @param <T>         type of an entity
@@ -210,8 +275,8 @@ public class JpaStandardManager implements JpaManager {
 	}
 
 	/**
-	 * Returns the count of entities with the specified <b>entityClass</b> filtered
-	 * by the specified expression <b>function</b>
+	 * Returns the count of entities with the specified {@code entityClass} filtered
+	 * by the specified expression {@code function}
 	 *
 	 * @param entityClass a class of an entity
 	 * @param function    an {@link ExpressionFunction} to apply filter
@@ -230,6 +295,7 @@ public class JpaStandardManager implements JpaManager {
 
 	/**
 	 * Inserts an entity object
+	 *
 	 * <p>
 	 * Returns the inserted entity object
 	 *
@@ -246,6 +312,7 @@ public class JpaStandardManager implements JpaManager {
 
 	/**
 	 * Inserts the collection of entities
+	 *
 	 * <p>
 	 * Returns the collection of inserted entities
 	 *
@@ -262,6 +329,7 @@ public class JpaStandardManager implements JpaManager {
 
 	/**
 	 * Updates the entity
+	 *
 	 * <p>
 	 * Returns the updated entity
 	 *
@@ -278,6 +346,7 @@ public class JpaStandardManager implements JpaManager {
 
 	/**
 	 * Updates the collection of entities
+	 *
 	 * <p>
 	 * Returns the collection of updated entities
 	 *

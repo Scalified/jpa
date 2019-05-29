@@ -47,8 +47,7 @@ import java.util.Collection;
  * A {@link Jpa} implementation
  *
  * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @since 2018-02-06
  */
 public class JpaImpl implements Jpa {
 

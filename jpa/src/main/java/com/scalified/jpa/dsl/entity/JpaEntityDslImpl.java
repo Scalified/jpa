@@ -31,8 +31,7 @@ import com.scalified.jpa.manager.JpaManager;
  * A {@link JpaEntityDsl} implementation
  *
  * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @since 2018-02-06
  */
 public class JpaEntityDslImpl<T> implements JpaEntityDsl<T> {
 

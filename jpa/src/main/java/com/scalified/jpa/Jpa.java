@@ -40,14 +40,13 @@ import javax.persistence.EntityManager;
 import java.util.Collection;
 
 /**
- * <p>
  * The entry point to start working with <b>JPA DSL</b>
+ *
  * <p>
  * Declares root <b>DSL</b> methods within <b>DSL</b> call chain
  *
  * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @since 2018-02-06
  */
 public interface Jpa {
 

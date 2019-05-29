@@ -31,8 +31,7 @@ import com.scalified.jpa.function.ExpressionFunction;
  * <b>DSL</b> for working with derived methods of entity class
  *
  * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @since 2018-02-06
  */
 public interface JpaFromDsl<T> {
 
@@ -45,11 +44,11 @@ public interface JpaFromDsl<T> {
 
 	/**
 	 * Returns count of entities with previously defined class, filtered by
-	 * the specified expression <b>function</b>
+	 * the specified expression {@code function}
 	 *
-	 * @param function an expression <b>function</b> to filter entities
+	 * @param function an expression {@code function} to filter entities
 	 * @return count of entities with previously defined class, filtered by
-	 * the specified expression <b>function</b>
+	 * the specified expression {@code function}
 	 */
 	long count(ExpressionFunction<T> function);
 

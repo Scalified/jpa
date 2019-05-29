@@ -32,6 +32,7 @@ import com.scalified.jpa.sp.SpQuery;
 import com.scalified.jpa.specification.Specification;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
@@ -40,13 +41,12 @@ import java.util.stream.Stream;
  * Declares available operations on entity used by <b>DSL</b>
  *
  * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @since 2018-02-06
  */
 public interface JpaManager {
 
 	/**
-	 * Returns an entity found by its <b>primaryKey</b>
+	 * Returns an entity found by its {@code primaryKey}
 	 *
 	 * @param entityClass a class of a searched entity
 	 * @param primaryKey  a primary key of a searched entity
@@ -57,11 +57,54 @@ public interface JpaManager {
 	<T, K> T find(Class<T> entityClass, K primaryKey);
 
 	/**
-	 * Returns the generic result found by the specified <b>criteriaFunction</b> and
-	 * derived from applying the specified <b>resultFunction</b>
+	 * Returns the {@link List} of all generic results found by the specified
+	 * {@code entityClass}
+	 *
+	 * @param entityClass a class of a searched entity
+	 * @param <T>         type of searched entity
+	 * @return {@link List} of all generic results
+	 */
+	<T> List<T> find(Class<T> entityClass);
+
+	/**
+	 * Returns the generic result found by the specified {@code entityClass}
+	 * and derived from applying the specified {@code resultFunction}
+	 *
+	 * @param entityClass    a class of a searched entity
+	 * @param resultFunction a function, which maps {@link CriteriaBuilder}
+	 *                       to a generic result
+	 * @param <T>            type of an entity
+	 * @param <R>            type of the result
+	 * @return generic result object
+	 */
+	<T, R> R find(Class<T> entityClass, ResultFunction<T, R> resultFunction);
+
+	/**
+	 * Returns the {@link Stream} of generic results found by the specified {@code entityClass}
+	 *
+	 * @param entityClass a class of a searched entity
+	 * @param <T>         type of searched entity
+	 * @return {@link Stream} of generic results
+	 */
+	<T> Stream<T> stream(Class<T> entityClass);
+
+	/**
+	 * Returns the {@link Stream} of generic results found by the specified {@code entityClass},
+	 * which has the specified {@code chunkSize}
+	 *
+	 * @param entityClass a class of a searched entity
+	 * @param chunkSize   size of chunk
+	 * @param <T>         type of searched entity
+	 * @return {@link Stream} of generic results
+	 */
+	<T> Stream<T> stream(Class<T> entityClass, int chunkSize);
+
+	/**
+	 * Returns the generic result found by the specified {@code criteriaFunction} and
+	 * derived from applying the specified {@code resultFunction}
 	 *
 	 * @param criteriaFunction a function to find result
-	 * @param resultFunction   a function, which maps {@link javax.persistence.criteria.CriteriaBuilder}
+	 * @param resultFunction   a function, which maps {@link CriteriaBuilder}
 	 *                         to a generic result
 	 * @param <T>              type of an entity
 	 * @param <R>              type of the result
@@ -70,31 +113,31 @@ public interface JpaManager {
 	<T, R> R find(CriteriaFunction<T> criteriaFunction, ResultFunction<T, R> resultFunction);
 
 	/**
-	 * Returns the <b>Stream</b> of generic results found by the specified <b>criteriaFunction</b>
+	 * Returns the {@link Stream} of generic results found by the specified {@code criteriaFunction}
 	 *
 	 * @param criteriaFunction a function to find result
 	 * @param <T>              type of an entity
-	 * @return <b>Stream</b> of generic results
+	 * @return {@link Stream} of generic results
 	 */
-	<T> Stream<T> find(CriteriaFunction<T> criteriaFunction);
+	<T> Stream<T> stream(CriteriaFunction<T> criteriaFunction);
 
 	/**
-	 * Returns the <b>Stream</b> of generic results found by the specified <b>criteriaFunction</b>
-	 * which has the specified <b>chunkSize</b>
+	 * Returns the {@link Stream} of generic results found by the specified {@code criteriaFunction},
+	 * which has the specified {@code chunkSize}
 	 *
 	 * @param criteriaFunction a function to find result
 	 * @param chunkSize        size of chunk
 	 * @param <T>              type of an entity
-	 * @return <b>Stream</b> of generic results
+	 * @return {@link Stream} of generic results
 	 */
-	<T> Stream<T> find(CriteriaFunction<T> criteriaFunction, int chunkSize);
+	<T> Stream<T> stream(CriteriaFunction<T> criteriaFunction, int chunkSize);
 
 	/**
-	 * Returns the generic result found by the specified <b>specification</b> and
-	 * derived from applying the specified <b>resultFunction</b>
+	 * Returns the generic result found by the specified {@code specification} and
+	 * derived from applying the specified {@code resultFunction}
 	 *
 	 * @param specification  a specification to find result
-	 * @param resultFunction a function, which maps {@link javax.persistence.criteria.CriteriaBuilder}
+	 * @param resultFunction a function, which maps {@link CriteriaBuilder}
 	 *                       to a generic result
 	 * @param <T>            type of an entity
 	 * @param <R>            type of the result
@@ -103,19 +146,17 @@ public interface JpaManager {
 	<T, R> R find(Specification<T> specification, ResultFunction<T, R> resultFunction);
 
 	/**
-	 * Returns the raw result as a list containing column values in
-	 * array of objects produced by stored procedure execution built
-	 * from the specified <b>spQuery</b>
+	 * Returns the raw result as a list containing column values in array of objects produced
+	 * by stored procedure execution built from the specified {@code spQuery}
 	 *
 	 * @param spQuery stored procedure configuration object
 	 * @param <T>     type of result
-	 * @return the raw result as a list containing column values in
-	 * array of objects
+	 * @return the raw result as a list containing column values in array of objects
 	 */
 	<T> List<Object[]> query(SpQuery<T> spQuery);
 
 	/**
-	 * Returns the count of all entities with the specified <b>entityClass</b>
+	 * Returns the count of all entities with the specified {@code entityClass}
 	 *
 	 * @param entityClass a class of an entity
 	 * @param <T>         type of an entity
@@ -124,8 +165,8 @@ public interface JpaManager {
 	<T> long count(Class<T> entityClass);
 
 	/**
-	 * Returns the count of entities with the specified <b>entityClass</b> filtered
-	 * by the specified expression <b>function</b>
+	 * Returns the count of entities with the specified {@code entityClass} filtered
+	 * by the specified expression {@code function}
 	 *
 	 * @param entityClass a class of an entity
 	 * @param function    an {@link ExpressionFunction} to apply filter
@@ -136,6 +177,7 @@ public interface JpaManager {
 
 	/**
 	 * Inserts an entity object
+	 *
 	 * <p>
 	 * Returns the inserted entity object
 	 *
@@ -147,6 +189,7 @@ public interface JpaManager {
 
 	/**
 	 * Inserts the collection of entities
+	 *
 	 * <p>
 	 * Returns the collection of inserted entities
 	 *
@@ -158,6 +201,7 @@ public interface JpaManager {
 
 	/**
 	 * Updates the entity
+	 *
 	 * <p>
 	 * Returns the updated entity
 	 *
@@ -169,6 +213,7 @@ public interface JpaManager {
 
 	/**
 	 * Updates the collection of entities
+	 *
 	 * <p>
 	 * Returns the collection of updated entities
 	 *

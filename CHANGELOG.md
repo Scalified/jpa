@@ -1,3 +1,7 @@
+# 1.2.0
+
+* [**24** Entities Find By Type API](https://github.com/Scalified/jpa/issues/24)
+
 # 1.1.1
 
 * [**#22** Unexpected CROSS JOIN on count with function call](https://github.com/Scalified/jpa/issues/22)

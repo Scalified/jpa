@@ -37,8 +37,7 @@ import java.util.stream.Stream;
  * <b>DSL</b> for finding entities using previously defined {@link CriteriaFunction}
  *
  * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @since 2018-02-06
  */
 public interface JpaFindByCriteriaFunctionDsl<T> {
 
@@ -57,6 +56,16 @@ public interface JpaFindByCriteriaFunctionDsl<T> {
 	Set<T> set();
 
 	/**
+	 * Returns some generic result using previously defined {@link CriteriaFunction}
+	 * and after applying the specified {@code resultFunction}
+	 *
+	 * @param resultFunction a function to apply on result
+	 * @param <R>            type of generic result
+	 * @return some generic result
+	 */
+	<R> R some(ResultFunction<T, R> resultFunction);
+
+	/**
 	 * Returns a stream of all found entities using previously defined {@link CriteriaFunction}
 	 *
 	 * @return a stream of all found entities
@@ -65,22 +74,12 @@ public interface JpaFindByCriteriaFunctionDsl<T> {
 
 	/**
 	 * Returns a stream of all found entities using previously defined {@link CriteriaFunction}
-	 * and the specified chunk size
+	 * and the specified {@code chunkSize}
 	 *
 	 * @param chunkSize size of a chunk
 	 * @return a stream of all found entities
 	 */
 	Stream<T> stream(int chunkSize);
-
-	/**
-	 * Returns some generic result using previously defined {@link CriteriaFunction}
-	 * and after applying the specified <b>resultFunction</b>
-	 *
-	 * @param resultFunction a function to apply on result
-	 * @param <R>            type of generic result
-	 * @return some generic result
-	 */
-	<R> R some(ResultFunction<T, R> resultFunction);
 
 	/**
 	 * Returns the first found entity using previously defined {@link CriteriaFunction}

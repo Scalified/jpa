@@ -34,8 +34,7 @@ import java.util.function.Function;
  * An alias function used to construct generic result from {@link CriteriaBuilder} and {@link Root}
  *
  * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @since 2018-02-06
  */
 @FunctionalInterface
 public interface ResultFunction<T, R> extends Function<TypedQuery<T>, R> {

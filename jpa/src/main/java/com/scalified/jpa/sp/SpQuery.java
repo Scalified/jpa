@@ -35,8 +35,7 @@ import java.util.List;
  * A stored procedure configuration object
  *
  * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @since 2018-08-18
  */
 public class SpQuery<T> {
 
@@ -137,8 +136,8 @@ public class SpQuery<T> {
 		}
 
 		/**
-		 * Adds stored procedure parameter with the specified <b>name</b>,
-		 * parameter <b>mode</b> and <b>value</b>
+		 * Adds stored procedure parameter with the specified {@code name},
+		 * parameter {@code mode} and {@code value}
 		 *
 		 * @param name  stored procedure parameter name
 		 * @param mode  stored procedure parameter mode
@@ -152,8 +151,8 @@ public class SpQuery<T> {
 		}
 
 		/**
-		 * Adds stored procedure parameter with the specified <b>name</b>,
-		 * <b>value</b> and {@link ParameterMode#IN} mode
+		 * Adds stored procedure parameter with the specified {@code name},
+		 * {@code value} and {@link ParameterMode#IN} mode
 		 *
 		 * @param name  stored procedure parameter name
 		 * @param value stored procedure parameter value
@@ -166,8 +165,8 @@ public class SpQuery<T> {
 		}
 
 		/**
-		 * Adds stored procedure parameter with the specified <b>name</b>,
-		 * <b>values</b> and {@link ParameterMode#IN} mode
+		 * Adds stored procedure parameter with the specified {@code name},
+		 * {@code values} and {@link ParameterMode#IN} mode
 		 *
 		 * <p>
 		 * The specified collection of values is passed as a single string
@@ -187,7 +186,7 @@ public class SpQuery<T> {
 		}
 
 		/**
-		 * Adds stored procedure parameter with the specified <b>name</b>
+		 * Adds stored procedure parameter with the specified {@code name}
 		 * and {@link ParameterMode#REF_CURSOR} mode
 		 *
 		 * @param name stored procedure parameter name

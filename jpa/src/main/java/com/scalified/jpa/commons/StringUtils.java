@@ -32,8 +32,7 @@ import java.util.Objects;
  * Provides utility methods for {@link java.lang.String}
  *
  * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @since 2018-08-18
  */
 public class StringUtils {
 
@@ -46,7 +45,8 @@ public class StringUtils {
 	 * Joins the elements of the provided {@code Iterable} into
 	 * a single String containing the provided elements
 	 *
-	 * <p>No delimiter is added before or after the list. Null objects or empty
+	 * <p>
+	 * No delimiter is added before or after the list. Null objects or empty
 	 * strings within the iteration are represented by empty strings
 	 *
 	 * @param iterable  the {@code Iterable} providing the values to join together, may be null
@@ -64,7 +64,8 @@ public class StringUtils {
 	 * Joins the elements of the provided {@code Iterator} into
 	 * a single String containing the provided elements
 	 *
-	 * <p>No delimiter is added before or after the list. Null objects or empty
+	 * <p>
+	 * No delimiter is added before or after the list. Null objects or empty
 	 * strings within the iteration are represented by empty strings
 	 *
 	 * @param iterator  the {@code Iterator} of values to join together, may be null

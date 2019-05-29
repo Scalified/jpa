@@ -23,5 +23,11 @@
  *
  */
 
-rootProject.name = 'jpa-root'
-include 'jpa'
+pluginManagement {
+	repositories {
+		gradlePluginPortal()
+	}
+}
+
+rootProject.name = "jpa"
+include("jpa")

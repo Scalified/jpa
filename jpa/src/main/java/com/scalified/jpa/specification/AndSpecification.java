@@ -35,8 +35,7 @@ import java.util.Collection;
  * A {@link Specification} <b>and</b> clause combiner
  *
  * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @since 2018-02-17
  */
 public class AndSpecification<T> implements Specification<T> {
 
@@ -55,12 +54,12 @@ public class AndSpecification<T> implements Specification<T> {
 	}
 
 	/**
-	 * Returns <b>true</b> if the specified object matches all of the specified specifications,
-	 * otherwise returns <b>false</b>
+	 * Returns {@code true} if the specified object matches all of the specified specifications,
+	 * otherwise returns {@code false}
 	 *
 	 * @param what an object to check specifications matching
-	 * @return <b>true</b> if the specified object matches all of the specified specifications,
-	 * <b>false</b> otherwise
+	 * @return {@code true} if the specified object matches all of the specified specifications,
+	 * {@code false} otherwise
 	 */
 	@Override
 	public boolean isSatisfiedBy(T what) {

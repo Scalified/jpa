@@ -33,8 +33,7 @@ import java.util.Set;
  * <b>DSL</b> for executing stored procedures
  *
  * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @since 2018-08-18
  */
 public interface JpaSpQueryDsl<T> {
 

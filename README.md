@@ -81,8 +81,27 @@ class Person {
 
 }
 
-// Finding entity by key
+// Finding entity by type and key
 Person personJohn = jpa.find(Person.class).one("John");
+
+// Finding entities by type
+List<Person> personList = jpa.find(Person.class).list();
+
+// Finding entities by type and mapping results to set
+List<Person> personSet = jpa.find(Person.class).set();
+
+// Finding entities by type and mapping results
+List<Person> personList = jpa.find(Person.class).some(query -> query.setMaxResults(100).getResultList());
+
+// Streaming entities by type
+Stream<Person> personStream = jpa.find(Person.class).stream();
+
+// Streaming entities by type specifying chunk size
+Stream<Person> personStream = jpa.find(Person.class).stream(100);
+
+// Finding first optional entity by type 
+Optional<Person> personList = jpa.find(Person.class).first();
+
 
 // Finding entities by criteria function and mapping results to list
 List<Person> personList = jpa.find(builder -> {
@@ -98,16 +117,28 @@ Set<Person> personSet = jpa.find(builder -> {
     return criteriaQuery.select(root);
 }).set();
 
-// Finding entities by criteria function and mapping results to stream
+// Finding entities by criteria function and mapping results
+Set<Person> personSet = jpa.find(builder -> {
+    CriteriaQuery<Person> criteriaQuery = builder.createQuery(Person.class);
+    Root<Person> root = criteriaQuery.from(Person.class);
+    return criteriaQuery.select(root);
+}).some(query -> query.setMaxResults(100).getResultList());
+
+// Streaming entities by criteria function
 Stream<Person> personStream = jpa.find(builder -> {
     CriteriaQuery<Person> criteriaQuery = builder.createQuery(Person.class);
     Root<Person> root = criteriaQuery.from(Person.class);
     return criteriaQuery.select(root);
 }).stream();
-// Under the hood, stream executes jpa queries for each chunk.
-// In case if table is populated or modified during stream consuming, the new data will also be included into result set.
 
-// Finding optional entity
+// Streaming entities by criteria function specifying chunk size
+Stream<Person> personStream = jpa.find(builder -> {
+    CriteriaQuery<Person> criteriaQuery = builder.createQuery(Person.class);
+    Root<Person> root = criteriaQuery.from(Person.class);
+    return criteriaQuery.select(root);
+}).stream(100);
+
+// Finding first optional entity by criteria function
 Optional<Person> person = jpa.find(builder -> {
     CriteriaQuery<Person> criteriaQuery = builder.createQuery(Person.class);
     Root<Person> root = criteriaQuery.from(Person.class);
@@ -160,6 +191,9 @@ List<Person> youngFemalePersons = jpa.find(AndSpecification.of(isYoungSpecificat
 // Combining multiple specifications into one OR condition specification
 List<Person> youngOrFemalePersons = jpa.find(OrSpecification.of(isYoungSpecification, isFemaleSpecification)).list();
 ```
+
+> Streaming entities executes jpa queries for each chunk under the hood. In case if table is populated or modified 
+during stream consuming, the new data will also be included into result set.
 
 ### Query DSL
 

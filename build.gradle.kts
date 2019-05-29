@@ -1,3 +1,5 @@
+import java.nio.charset.StandardCharsets
+
 /*
  * MIT License
  *
@@ -23,9 +25,21 @@
  *
  */
 
-apply plugin: 'java'
-apply plugin: 'maven-publish'
+allprojects {
 
-dependencies {
-	compileOnly 'javax:javaee-api:7.0'
+	group = "com.scalified"
+	version = "1.2.0"
+	
+	val javaeeVersion by extra("7.0")
+
+	repositories {
+		mavenCentral()
+	}
+
+	tasks.withType<JavaCompile> {
+		sourceCompatibility = "${JavaVersion.VERSION_1_8}"
+		targetCompatibility = "${JavaVersion.VERSION_1_8}"
+		options.encoding = Charsets.UTF_8.name()
+	}
+
 }

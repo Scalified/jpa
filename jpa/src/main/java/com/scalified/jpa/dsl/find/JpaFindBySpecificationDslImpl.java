@@ -39,8 +39,7 @@ import java.util.Set;
  * A {@link JpaFindBySpecificationDsl} implementation
  *
  * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @since 2018-02-17
  */
 public class JpaFindBySpecificationDslImpl<T> implements JpaFindBySpecificationDsl<T> {
 
@@ -87,7 +86,7 @@ public class JpaFindBySpecificationDslImpl<T> implements JpaFindBySpecificationD
 
 	/**
 	 * Returns some generic result using {@link Specification}
-	 * and after applying the specified <b>resultFunction</b>
+	 * and after applying the specified {@code resultFunction}
 	 *
 	 * @param resultFunction a function to apply on result
 	 * @param <R>            type of generic result

@@ -38,8 +38,7 @@ import java.util.stream.Stream;
  * A {@link Spliterator} used to create {@link Stream} for entity chunk loading
  *
  * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @since 2018-08-14
  */
 public class EntitySpliterator<T> implements Spliterator<T> {
 
@@ -97,7 +96,7 @@ public class EntitySpliterator<T> implements Spliterator<T> {
 	 * The action is performed on the next element in encounter order.
 	 * Exceptions thrown by the action are relayed to the caller.
 	 *
-	 * @param action The action
+	 * @param action the action
 	 * @return {@code false} if no remaining elements existed
 	 * upon entry to this method, else {@code true}.
 	 * @throws NullPointerException if the specified action is {@code null}

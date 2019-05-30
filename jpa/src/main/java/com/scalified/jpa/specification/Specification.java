@@ -29,6 +29,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.lang.reflect.ParameterizedType;
+import java.util.Arrays;
 
 /**
  * Describes specifications based on specification pattern
@@ -67,8 +68,15 @@ public interface Specification<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	default Class<T> getType() {
-		return (Class<T>) ((ParameterizedType) getClass()
-				.getGenericSuperclass()).getActualTypeArguments()[0];
+		return Arrays.stream(getClass().getGenericInterfaces())
+				.filter(ParameterizedType.class::isInstance)
+				.map(type -> (ParameterizedType) type)
+				.filter(type -> type.getRawType() == Specification.class)
+				.map(type -> type.getActualTypeArguments()[0])
+				.filter(Class.class::isInstance)
+				.map(type -> (Class) type)
+				.findFirst()
+				.orElseThrow(UnsupportedOperationException::new);
 	}
 
 }

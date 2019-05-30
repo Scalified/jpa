@@ -1,3 +1,7 @@
+# 1.2.1
+
+* [**26** Specification getType Default Implementation Fix](https://github.com/Scalified/jpa/issues/26)
+
 # 1.2.0
 
 * [**24** Entities Find By Type API](https://github.com/Scalified/jpa/issues/24)

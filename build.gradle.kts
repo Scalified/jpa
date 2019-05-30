@@ -28,7 +28,7 @@ import java.nio.charset.StandardCharsets
 allprojects {
 
 	group = "com.scalified"
-	version = "1.2.0"
+	version = "1.2.1"
 	
 	val javaeeVersion by extra("7.0")
 

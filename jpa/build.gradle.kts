@@ -29,5 +29,5 @@ plugins {
 }
 
 dependencies {
-	compileOnly("javax:javaee-api:${extra["javaeeVersion"]}")
+	compileOnly("javax:javaee-api:${project.extra["javaeeVersion"]}")
 }

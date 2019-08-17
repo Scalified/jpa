@@ -333,6 +333,58 @@ jpa.entities(persons).refresh();
 jpa.entities(persons).detach();
 ```
 
+### AbstractRepository
+
+**Jpa** provides an **AbstractRepository** abstract class, which provides common repositories methods:
+
+```java
+Jpa jpa;
+// ... jpa initialization skipped
+
+@Entity
+class Person {
+	
+    @Id
+    Integer id;
+
+    String name;
+
+    Person(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    void setName(String name) {
+        this.name = name;
+    }
+
+}
+
+// Repository
+import com.scalified.jpa.repository.AbstractRepository
+
+class PersonRepository extends AbstractRepository<Person> {
+	
+    PersonRepository(Jpa jpa) {
+        super(jpa);
+    }
+	
+}
+
+PersonRepository repository = new PersonRepository(jpa);
+Person person = new Person(1, "John");
+
+// Adding an entity
+repository.add(person);
+
+// Replacing an entity
+person.setName("Alice");
+repository.replace(person);
+
+// Removing an entity
+repository.remove(person);
+``` 
+
 ## License
 
 ```

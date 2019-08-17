@@ -1,3 +1,7 @@
+# 1.3.0
+
+* [**28** AbstractRepository](https://github.com/Scalified/jpa/issues/28)
+
 # 1.2.1
 
 * [**26** Specification getType Default Implementation Fix](https://github.com/Scalified/jpa/issues/26)

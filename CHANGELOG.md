@@ -1,3 +1,7 @@
+# 1.3.1
+
+* [**30** SP Query ClassCastException](https://github.com/Scalified/jpa/issues/30)
+
 # 1.3.0
 
 * [**28** AbstractRepository](https://github.com/Scalified/jpa/issues/28)

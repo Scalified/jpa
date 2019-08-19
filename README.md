@@ -220,9 +220,6 @@ List<String> resultList = jpa.query(query).list();
 
 // Calling stored procedure and retrieving optional result
 Optional<String> optionalResult = jpa.query(query).first();
-
-// Calling stored procedure and retrieving raw result
-List<Object[]> rawResult = jpa.query(query).raw();
 ```
 
 ### From DSL

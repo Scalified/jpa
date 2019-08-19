@@ -32,7 +32,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * A {@link JpaSpQueryDsl} implementation
@@ -69,11 +68,8 @@ public class JpaSpQueryDslImpl<T> implements JpaSpQueryDsl<T> {
 	 * @return a list of all results
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public List<T> list() {
-		return raw().stream()
-				.map(r -> (T) r)
-				.collect(Collectors.toList());
+		return manager.query(query);
 	}
 
 	/**
@@ -95,18 +91,6 @@ public class JpaSpQueryDslImpl<T> implements JpaSpQueryDsl<T> {
 	public Optional<T> first() {
 		return list().stream()
 				.findFirst();
-	}
-
-	/**
-	 * Returns the raw result as a list containing column values in
-	 * array of objects produced by stored procedure execution
-	 *
-	 * @return the raw result as a list containing column values in
-	 * array of objects
-	 */
-	@Override
-	public List<Object[]> raw() {
-		return manager.query(query);
 	}
 
 }

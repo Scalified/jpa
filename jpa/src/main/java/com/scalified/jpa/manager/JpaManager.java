@@ -146,14 +146,14 @@ public interface JpaManager {
 	<T, R> R find(Specification<T> specification, ResultFunction<T, R> resultFunction);
 
 	/**
-	 * Returns the raw result as a list containing column values in array of objects produced
-	 * by stored procedure execution built from the specified {@code spQuery}
+	 * Returns the list of entities as a result of stored procedure execution
+	 * built from the specified {@code spQuery}
 	 *
 	 * @param spQuery stored procedure configuration object
 	 * @param <T>     type of result
-	 * @return the raw result as a list containing column values in array of objects
+	 * @return the list of entities
 	 */
-	<T> List<Object[]> query(SpQuery<T> spQuery);
+	<T> List<T> query(SpQuery<T> spQuery);
 
 	/**
 	 * Returns the count of all entities with the specified {@code entityClass}

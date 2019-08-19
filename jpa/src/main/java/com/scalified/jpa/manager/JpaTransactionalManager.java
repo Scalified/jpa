@@ -191,15 +191,15 @@ public class JpaTransactionalManager implements JpaManager {
 	}
 
 	/**
-	 * Returns the raw result as a list containing column values in array of objects produced
-	 * by stored procedure execution built from the specified {@code spQuery}
+	 * Returns the list of entities as a result of stored procedure execution
+	 * built from the specified {@code spQuery}
 	 *
 	 * @param spQuery stored procedure configuration object
 	 * @param <T>     type of result
-	 * @return the raw result as a list containing column values in array of objects
+	 * @return the list of entities
 	 */
 	@Override
-	public <T> List<Object[]> query(SpQuery<T> spQuery) {
+	public <T> List<T> query(SpQuery<T> spQuery) {
 		return manager.query(spQuery);
 	}
 

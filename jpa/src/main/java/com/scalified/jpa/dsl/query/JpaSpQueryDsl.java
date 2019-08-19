@@ -58,13 +58,4 @@ public interface JpaSpQueryDsl<T> {
 	 */
 	Optional<T> first();
 
-	/**
-	 * Returns the raw result as a list containing column values in
-	 * array of objects produced by stored procedure execution
-	 *
-	 * @return the raw result as a list containing column values in
-	 * array of objects
-	 */
-	List<Object[]> raw();
-
 }

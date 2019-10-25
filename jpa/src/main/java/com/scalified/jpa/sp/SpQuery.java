@@ -30,6 +30,7 @@ import com.scalified.jpa.commons.StringUtils;
 import javax.persistence.ParameterMode;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A stored procedure configuration object
@@ -145,8 +146,9 @@ public class SpQuery<T> {
 		 * @return this object
 		 */
 		public Builder<T> withParam(String name, ParameterMode mode, Object value) {
-			SpParam param = new SpParam(name, mode, value);
-			this.spQuery.params.add(param);
+			if (Objects.nonNull(value)) {
+				this.spQuery.params.add(new SpParam(name, mode, value));
+			}
 			return this;
 		}
 
@@ -159,8 +161,9 @@ public class SpQuery<T> {
 		 * @return this object
 		 */
 		public Builder<T> withInParam(String name, Object value) {
-			SpParam param = new SpParam(name, ParameterMode.IN, value);
-			this.spQuery.params.add(param);
+			if (Objects.nonNull(value)) {
+				this.spQuery.params.add(new SpParam(name, ParameterMode.IN, value));
+			}
 			return this;
 		}
 
@@ -179,9 +182,10 @@ public class SpQuery<T> {
 		 * @return this object
 		 */
 		public Builder<T> withInParam(String name, List<String> values) {
-			String value = StringUtils.join(values, ',');
-			SpParam param = new SpParam(name, ParameterMode.IN, value);
-			this.spQuery.params.add(param);
+			if (Objects.nonNull(values) && !values.isEmpty()) {
+				String value = StringUtils.join(values, ',');
+				this.spQuery.params.add(new SpParam(name, ParameterMode.IN, value));
+			}
 			return this;
 		}
 

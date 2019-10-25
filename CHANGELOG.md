@@ -1,3 +1,7 @@
+# 1.3.2
+
+* [**33** SpProcedure Params Not Checked for Null](https://github.com/Scalified/jpa/issues/33)
+
 # 1.3.1
 
 * [**30** SP Query ClassCastException](https://github.com/Scalified/jpa/issues/30)

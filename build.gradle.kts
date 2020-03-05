@@ -1,5 +1,3 @@
-import java.nio.charset.StandardCharsets
-
 /*
  * MIT License
  *
@@ -28,17 +26,17 @@ import java.nio.charset.StandardCharsets
 allprojects {
 
 	group = "com.scalified"
-	version = "1.3.2"
-	
-	val javaeeVersion by extra("7.0")
+	version = "2.0.0"
+
+	val javaeeVersion by extra("8.0")
 
 	repositories {
 		mavenCentral()
 	}
 
 	tasks.withType<JavaCompile> {
-		sourceCompatibility = "${JavaVersion.VERSION_1_8}"
-		targetCompatibility = "${JavaVersion.VERSION_1_8}"
+		sourceCompatibility = JavaVersion.VERSION_1_8.majorVersion
+		targetCompatibility = JavaVersion.VERSION_1_8.majorVersion
 		options.encoding = Charsets.UTF_8.name()
 	}
 

@@ -71,6 +71,17 @@ public class SpQuery<T> {
 	}
 
 	/**
+	 * Creates stored procedure configuration object builder
+	 *
+	 * @param name stored procedure name
+	 * @param <T>  type of result
+	 * @return stored procedure configuration object builder
+	 */
+	public static <T> Builder<T> builder(String name) {
+		return new Builder<>(name);
+	}
+
+	/**
 	 * Returns stored procedure name
 	 *
 	 * @return stored procedure name
@@ -104,17 +115,6 @@ public class SpQuery<T> {
 	 */
 	public String[] getResultMappings() {
 		return resultMappings;
-	}
-
-	/**
-	 * Creates stored procedure configuration object builder
-	 *
-	 * @param name stored procedure name
-	 * @param <T>  type of result
-	 * @return stored procedure configuration object builder
-	 */
-	public static <T> Builder<T> builder(String name) {
-		return new Builder<>(name);
 	}
 
 	/**

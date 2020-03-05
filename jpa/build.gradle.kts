@@ -25,7 +25,7 @@
 
 plugins {
 	`java-library`
-	id("maven-publish")
+	`maven-publish`
 }
 
 dependencies {

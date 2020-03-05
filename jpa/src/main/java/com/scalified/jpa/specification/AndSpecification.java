@@ -54,6 +54,19 @@ public class AndSpecification<T> implements Specification<T> {
 	}
 
 	/**
+	 * Creates {@link AndSpecification} instance
+	 *
+	 * @param specifications specifications to combine
+	 * @param <T>            entity type
+	 * @param <S>            specification type
+	 * @return {@link AndSpecification} instance
+	 */
+	@SafeVarargs
+	public static <T, S extends Specification<T>> AndSpecification<T> of(S... specifications) {
+		return new AndSpecification<>(Arrays.asList(specifications));
+	}
+
+	/**
 	 * Returns {@code true} if the specified object matches all of the specified specifications,
 	 * otherwise returns {@code false}
 	 *
@@ -80,19 +93,6 @@ public class AndSpecification<T> implements Specification<T> {
 				.map(specification -> specification.toPredicate(builder, root))
 				.toArray(Predicate[]::new);
 		return builder.and(predicates);
-	}
-
-	/**
-	 * Creates {@link AndSpecification} instance
-	 *
-	 * @param specifications specifications to combine
-	 * @param <T>            entity type
-	 * @param <S>            specification type
-	 * @return {@link AndSpecification} instance
-	 */
-	@SafeVarargs
-	public static <T, S extends Specification<T>> AndSpecification<T> of(S... specifications) {
-		return new AndSpecification<>(Arrays.asList(specifications));
 	}
 
 }

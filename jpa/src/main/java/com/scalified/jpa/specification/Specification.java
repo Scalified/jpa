@@ -66,7 +66,7 @@ public interface Specification<T> {
 	 *
 	 * @return current {@link Specification} type
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	default Class<T> getType() {
 		return Arrays.stream(getClass().getGenericInterfaces())
 				.filter(ParameterizedType.class::isInstance)

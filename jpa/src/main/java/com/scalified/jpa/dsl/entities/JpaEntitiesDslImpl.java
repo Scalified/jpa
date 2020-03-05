@@ -45,7 +45,7 @@ public class JpaEntitiesDslImpl<T, K extends Collection<T>> implements JpaEntiti
 	/**
 	 * A collection of entities to perform operations on
 	 */
-	private K entities;
+	private final K entities;
 
 	/**
 	 * Creates {@link JpaEntitiesDslImpl} instance

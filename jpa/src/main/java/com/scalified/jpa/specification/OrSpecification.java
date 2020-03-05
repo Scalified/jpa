@@ -54,6 +54,19 @@ public class OrSpecification<T> implements Specification<T> {
 	}
 
 	/**
+	 * Creates {@link OrSpecification} instance
+	 *
+	 * @param specifications specifications to combine
+	 * @param <T>            entity type
+	 * @param <S>            specification type
+	 * @return {@link OrSpecification} instance
+	 */
+	@SafeVarargs
+	public static <T, S extends Specification<T>> OrSpecification<T> of(S... specifications) {
+		return new OrSpecification<>(Arrays.asList(specifications));
+	}
+
+	/**
 	 * Returns {@code true} if the specified object matches any of the specified specifications,
 	 * otherwise returns {@code false}
 	 *
@@ -80,19 +93,6 @@ public class OrSpecification<T> implements Specification<T> {
 				.map(specification -> specification.toPredicate(builder, root))
 				.toArray(Predicate[]::new);
 		return builder.or(predicates);
-	}
-
-	/**
-	 * Creates {@link OrSpecification} instance
-	 *
-	 * @param specifications specifications to combine
-	 * @param <T>            entity type
-	 * @param <S>            specification type
-	 * @return {@link OrSpecification} instance
-	 */
-	@SafeVarargs
-	public static <T, S extends Specification<T>> OrSpecification<T> of(S... specifications) {
-		return new OrSpecification<>(Arrays.asList(specifications));
 	}
 
 }

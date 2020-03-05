@@ -1,3 +1,7 @@
+# 2.0.0
+
+* [**34** Java EE 8.0 Update](https://github.com/Scalified/jpa/issues/34)
+
 # 1.3.2
 
 * [**33** SpProcedure Params Not Checked for Null](https://github.com/Scalified/jpa/issues/33)

@@ -59,7 +59,7 @@ public interface JpaFindBySpecificationDsl<T> {
 	 * and after applying the specified {@code resultFunction}
 	 *
 	 * @param resultFunction a function to apply on result
-	 * @param <R>            type of generic result
+	 * @param <R>            type of the generic result
 	 * @return some generic result
 	 */
 	<R> R some(ResultFunction<T, R> resultFunction);

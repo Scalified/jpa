@@ -79,7 +79,7 @@ public class JpaSynchronizedManager implements JpaManager {
 	 * {@code entityClass}
 	 *
 	 * @param entityClass a class of a searched entity
-	 * @param <T>         type of searched entity
+	 * @param <T>         type of the searched entity
 	 * @return {@link List} of all generic results
 	 */
 	@Override
@@ -107,7 +107,7 @@ public class JpaSynchronizedManager implements JpaManager {
 	 * Returns the {@link Stream} of generic results found by the specified {@code entityClass}
 	 *
 	 * @param entityClass a class of a searched entity
-	 * @param <T>         type of searched entity
+	 * @param <T>         type of the searched entity
 	 * @return {@link Stream} of generic results
 	 */
 	@Override
@@ -121,7 +121,7 @@ public class JpaSynchronizedManager implements JpaManager {
 	 *
 	 * @param entityClass a class of a searched entity
 	 * @param chunkSize   size of chunk
-	 * @param <T>         type of searched entity
+	 * @param <T>         type of the searched entity
 	 * @return {@link Stream} of generic results
 	 */
 	@Override
@@ -188,11 +188,24 @@ public class JpaSynchronizedManager implements JpaManager {
 	}
 
 	/**
+	 * Returns the list of entities as a result of raw {@code sql} query execution
+	 *
+	 * @param sql         raw SQL query
+	 * @param entityClass type of the result entities
+	 * @param <T>         type of the result
+	 * @return the list of entities
+	 */
+	@Override
+	public <T> List<T> query(String sql, Class<T> entityClass) {
+		return manager.query(sql, entityClass);
+	}
+
+	/**
 	 * Returns the list of entities as a result of stored procedure execution
 	 * built from the specified {@code spQuery}
 	 *
 	 * @param spQuery stored procedure configuration object
-	 * @param <T>     type of result
+	 * @param <T>     type of the result
 	 * @return the list of entities
 	 */
 	@Override

@@ -25,48 +25,43 @@
 
 package com.scalified.jpa.dsl.query;
 
-import com.scalified.jpa.manager.JpaManager;
-import com.scalified.jpa.sp.SpQuery;
-
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
- * A {@link JpaQueryDsl} implementation for stored procedures execution
+ * <b>DSL</b> for executing queries
  *
  * @author shell
  * @since 2018-08-18
  */
-public class JpaSpQueryDslImpl<T> implements JpaQueryDsl<T> {
+public interface JpaQueryDsl<T> {
 
 	/**
-	 * An underlying {@link JpaManager}
-	 */
-	private final JpaManager manager;
-
-	/**
-	 * {@link SpQuery} used to execute stored procedure
-	 */
-	private final SpQuery<T> query;
-
-	/**
-	 * Creates {@link JpaQueryDsl} instance
-	 *
-	 * @param manager an underlying {@link JpaManager}
-	 * @param query   {@link SpQuery} used to execute stored procedure
-	 */
-	public JpaSpQueryDslImpl(JpaManager manager, SpQuery<T> query) {
-		this.manager = manager;
-		this.query = query;
-	}
-
-	/**
-	 * Returns a list of all results produced by stored procedure execution
+	 * Returns a list of all results produced by query execution
 	 *
 	 * @return a list of all results
 	 */
-	@Override
-	public List<T> list() {
-		return manager.query(query);
+	List<T> list();
+
+	/**
+	 * Returns a set of all results produced by query execution
+	 *
+	 * @return a set of all results
+	 */
+	default Set<T> set() {
+		return new LinkedHashSet<>(list());
+	}
+
+	/**
+	 * Returns the first result produced by query execution
+	 *
+	 * @return the first result
+	 */
+	default Optional<T> first() {
+		return list().stream()
+				.findFirst();
 	}
 
 }

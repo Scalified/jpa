@@ -74,7 +74,7 @@ public class SpQuery<T> {
 	 * Creates stored procedure configuration object builder
 	 *
 	 * @param name stored procedure name
-	 * @param <T>  type of result
+	 * @param <T>  type of the result
 	 * @return stored procedure configuration object builder
 	 */
 	public static <T> Builder<T> builder(String name) {

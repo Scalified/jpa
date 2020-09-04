@@ -32,7 +32,8 @@ import com.scalified.jpa.dsl.entity.JpaEntityDslImpl;
 import com.scalified.jpa.dsl.find.*;
 import com.scalified.jpa.dsl.from.JpaFromDsl;
 import com.scalified.jpa.dsl.from.JpaFromDslImpl;
-import com.scalified.jpa.dsl.query.JpaSpQueryDsl;
+import com.scalified.jpa.dsl.query.JpaQueryDsl;
+import com.scalified.jpa.dsl.query.JpaQueryDslImpl;
 import com.scalified.jpa.dsl.query.JpaSpQueryDslImpl;
 import com.scalified.jpa.function.CriteriaFunction;
 import com.scalified.jpa.manager.JpaManager;
@@ -116,15 +117,29 @@ public class JpaImpl implements Jpa {
 	}
 
 	/**
-	 * Returns {@link JpaSpQueryDsl} object, which provides the next <b>DSL</b>
+	 * Returns {@link JpaQueryDsl} object, which provides the next <b>DSL</b>
+	 * methods within <b>DSL</b> call chain to execute raw SQL query
+	 *
+	 * @param sql         raw SQL query
+	 * @param entityClass class of the result entities
+	 * @param <T>         type of the result entities
+	 * @return {@link JpaQueryDsl} object
+	 */
+	@Override
+	public <T> JpaQueryDsl<T> query(String sql, Class<T> entityClass) {
+		return new JpaQueryDslImpl<>(manager, sql, entityClass);
+	}
+
+	/**
+	 * Returns {@link JpaQueryDsl} object, which provides the next <b>DSL</b>
 	 * methods within <b>DSL</b> call chain to execute stored procedure
 	 *
 	 * @param spQuery stored procedure configuration object
-	 * @param <T>     type of result
-	 * @return {@link JpaSpQueryDsl} object
+	 * @param <T>     type of the result
+	 * @return {@link JpaQueryDsl} object
 	 */
 	@Override
-	public <T> JpaSpQueryDsl<T> query(SpQuery<T> spQuery) {
+	public <T> JpaQueryDsl<T> query(SpQuery<T> spQuery) {
 		return new JpaSpQueryDslImpl<>(manager, spQuery);
 	}
 
@@ -160,7 +175,7 @@ public class JpaImpl implements Jpa {
 	 *
 	 * @param entities a collection of entity instances
 	 * @param <T>      type of an entity
-	 * @param <K>      type of entities collection
+	 * @param <K>      type of the entities collection
 	 * @return {@link JpaEntitiesDsl} object
 	 */
 	@Override

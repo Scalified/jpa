@@ -25,37 +25,54 @@
 
 package com.scalified.jpa.dsl.query;
 
+import com.scalified.jpa.manager.JpaManager;
+
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 /**
- * <b>DSL</b> for executing stored procedures
+ * A {@link JpaQueryDsl} implementation for raw SQL queries
  *
  * @author shell
  * @since 2018-08-18
  */
-public interface JpaSpQueryDsl<T> {
+public class JpaQueryDslImpl<T> implements JpaQueryDsl<T> {
+
+	/**
+	 * An underlying {@link JpaManager}
+	 */
+	private final JpaManager manager;
+
+	/**
+	 * Raw SQL query
+	 */
+	private final String sql;
+
+	/**
+	 * Type of the result entities
+	 */
+	private final Class<T> entityClass;
+
+	/**
+	 * Creates {@link JpaQueryDsl} instance
+	 *
+	 * @param manager     an underlying {@link JpaManager}
+	 * @param sql         raw SQL query
+	 * @param entityClass class of the result entities
+	 */
+	public JpaQueryDslImpl(JpaManager manager, String sql, Class<T> entityClass) {
+		this.manager = manager;
+		this.sql = sql;
+		this.entityClass = entityClass;
+	}
 
 	/**
 	 * Returns a list of all results produced by stored procedure execution
 	 *
 	 * @return a list of all results
 	 */
-	List<T> list();
-
-	/**
-	 * Returns a set of all results produced by stored procedure execution
-	 *
-	 * @return a set of all results
-	 */
-	Set<T> set();
-
-	/**
-	 * Returns the first result produced by stored procedure execution
-	 *
-	 * @return the first result
-	 */
-	Optional<T> first();
+	@Override
+	public List<T> list() {
+		return manager.query(sql, entityClass);
+	}
 
 }

@@ -1,3 +1,7 @@
+# 2.1.0
+
+* [**#36** RAW Queries](https://github.com/Scalified/jpa/issues/36)
+
 # 2.0.0
 
 * [**#34** Java EE 8.0 Update](https://github.com/Scalified/jpa/issues/34)

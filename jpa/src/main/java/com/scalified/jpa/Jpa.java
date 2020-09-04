@@ -31,7 +31,7 @@ import com.scalified.jpa.dsl.find.JpaFindByCriteriaFunctionDsl;
 import com.scalified.jpa.dsl.find.JpaFindByEntityClassDsl;
 import com.scalified.jpa.dsl.find.JpaFindBySpecificationDsl;
 import com.scalified.jpa.dsl.from.JpaFromDsl;
-import com.scalified.jpa.dsl.query.JpaSpQueryDsl;
+import com.scalified.jpa.dsl.query.JpaQueryDsl;
 import com.scalified.jpa.function.CriteriaFunction;
 import com.scalified.jpa.sp.SpQuery;
 import com.scalified.jpa.specification.Specification;
@@ -83,14 +83,25 @@ public interface Jpa {
 	<T> JpaFindBySpecificationDsl<T> find(Specification<T> specification);
 
 	/**
-	 * Returns {@link JpaSpQueryDsl} object, which provides the next <b>DSL</b>
+	 * Returns {@link JpaQueryDsl} object, which provides the next <b>DSL</b>
+	 * methods within <b>DSL</b> call chain to execute raw SQL query
+	 *
+	 * @param sql         raw SQL query
+	 * @param entityClass class of the result entities
+	 * @param <T>         type of the result entities
+	 * @return {@link JpaQueryDsl} object
+	 */
+	<T> JpaQueryDsl<T> query(String sql, Class<T> entityClass);
+
+	/**
+	 * Returns {@link JpaQueryDsl} object, which provides the next <b>DSL</b>
 	 * methods within <b>DSL</b> call chain to execute stored procedure
 	 *
 	 * @param spQuery stored procedure configuration object
-	 * @param <T>     type of result
-	 * @return {@link JpaSpQueryDsl} object
+	 * @param <T>     type of the result
+	 * @return {@link JpaQueryDsl} object
 	 */
-	<T> JpaSpQueryDsl<T> query(SpQuery<T> spQuery);
+	<T> JpaQueryDsl<T> query(SpQuery<T> spQuery);
 
 	/**
 	 * Returns {@link JpaFromDsl} object, which provides the next <b>DSL</b> methods
@@ -118,7 +129,7 @@ public interface Jpa {
 	 *
 	 * @param entities a collection of entity instances
 	 * @param <T>      type of an entity
-	 * @param <K>      type of entities collection
+	 * @param <K>      type of the entities collection
 	 * @return {@link JpaEntitiesDsl} object
 	 */
 	<T, K extends Collection<T>> JpaEntitiesDsl<T> entities(K entities);

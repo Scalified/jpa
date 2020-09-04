@@ -61,7 +61,7 @@ public interface JpaManager {
 	 * {@code entityClass}
 	 *
 	 * @param entityClass a class of a searched entity
-	 * @param <T>         type of searched entity
+	 * @param <T>         type of the searched entity
 	 * @return {@link List} of all generic results
 	 */
 	<T> List<T> find(Class<T> entityClass);
@@ -83,7 +83,7 @@ public interface JpaManager {
 	 * Returns the {@link Stream} of generic results found by the specified {@code entityClass}
 	 *
 	 * @param entityClass a class of a searched entity
-	 * @param <T>         type of searched entity
+	 * @param <T>         type of the searched entity
 	 * @return {@link Stream} of generic results
 	 */
 	<T> Stream<T> stream(Class<T> entityClass);
@@ -94,7 +94,7 @@ public interface JpaManager {
 	 *
 	 * @param entityClass a class of a searched entity
 	 * @param chunkSize   size of chunk
-	 * @param <T>         type of searched entity
+	 * @param <T>         type of the searched entity
 	 * @return {@link Stream} of generic results
 	 */
 	<T> Stream<T> stream(Class<T> entityClass, int chunkSize);
@@ -146,11 +146,21 @@ public interface JpaManager {
 	<T, R> R find(Specification<T> specification, ResultFunction<T, R> resultFunction);
 
 	/**
+	 * Returns the list of entities as a result of raw {@code sql} query execution
+	 *
+	 * @param sql         raw SQL query
+	 * @param entityClass type of the result entities
+	 * @param <T>         type of the result
+	 * @return the list of entities
+	 */
+	<T> List<T> query(String sql, Class<T> entityClass);
+
+	/**
 	 * Returns the list of entities as a result of stored procedure execution
 	 * built from the specified {@code spQuery}
 	 *
 	 * @param spQuery stored procedure configuration object
-	 * @param <T>     type of result
+	 * @param <T>     type of the result
 	 * @return the list of entities
 	 */
 	<T> List<T> query(SpQuery<T> spQuery);

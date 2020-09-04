@@ -197,7 +197,28 @@ during stream consuming, the new data will also be included into result set.
 
 ### Query DSL
 
-**Query** DSL provides convenient way of stored procedure queries execution
+**Query** DSL provides convenient way for queries execution
+
+#### Raw SQL Queries Execution
+
+```java
+Jpa jpa;
+// ... jpa initialization skipped
+
+// Raw SQL query
+String sql = "SELECT * FROM PERSON"
+
+// Executing raw SQL query and mapping results to set
+Set<Person> resultSet = jpa.query(query, Person.class).set();
+
+// Executing raw SQL query and mapping results to list
+List<Person> resultList = jpa.query(query, Person.class).list();
+
+// Executing raw SQL query and retrieving optional result
+Optional<Person> optionalResult = jpa.query(query, Person.class).first();
+```
+
+#### Stored Procedures Execution
 
 ```java
 Jpa jpa;

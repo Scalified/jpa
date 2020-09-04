@@ -26,7 +26,7 @@
 allprojects {
 
 	group = "com.scalified"
-	version = "2.0.0"
+	version = "2.1.0"
 
 	val javaeeVersion by extra("8.0")
 

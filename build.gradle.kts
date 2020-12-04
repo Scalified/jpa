@@ -26,7 +26,7 @@
 allprojects {
 
 	group = "com.scalified"
-	version = "2.1.0"
+	version = "2.2.0"
 
 	val javaeeVersion by extra("8.0")
 
@@ -35,8 +35,8 @@ allprojects {
 	}
 
 	tasks.withType<JavaCompile> {
-		sourceCompatibility = JavaVersion.VERSION_1_8.majorVersion
-		targetCompatibility = JavaVersion.VERSION_1_8.majorVersion
+		sourceCompatibility = JavaVersion.VERSION_11.majorVersion
+		targetCompatibility = JavaVersion.VERSION_11.majorVersion
 		options.encoding = Charsets.UTF_8.name()
 	}
 

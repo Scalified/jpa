@@ -91,9 +91,10 @@ public class JpaStandardManager implements JpaManager {
 	 */
 	@Override
 	public <T> List<T> find(Class<T> entityClass) {
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<T> criteriaQuery = builder.createQuery(entityClass);
-		TypedQuery<T> query = em.createQuery(criteriaQuery);
+		var builder = em.getCriteriaBuilder();
+		var criteriaQuery = builder.createQuery(entityClass);
+		var root = criteriaQuery.from(entityClass);
+		var query = em.createQuery(criteriaQuery.select(root));
 		return query.getResultList();
 	}
 
@@ -110,9 +111,10 @@ public class JpaStandardManager implements JpaManager {
 	 */
 	@Override
 	public <T, R> R find(Class<T> entityClass, ResultFunction<T, R> resultFunction) {
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<T> criteriaQuery = builder.createQuery(entityClass);
-		TypedQuery<T> query = em.createQuery(criteriaQuery);
+		var builder = em.getCriteriaBuilder();
+		var criteriaQuery = builder.createQuery(entityClass);
+		var root = criteriaQuery.from(entityClass);
+		var query = em.createQuery(criteriaQuery.select(root));
 		return resultFunction.apply(query);
 	}
 
@@ -125,9 +127,10 @@ public class JpaStandardManager implements JpaManager {
 	 */
 	@Override
 	public <T> Stream<T> stream(Class<T> entityClass) {
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<T> criteriaQuery = builder.createQuery(entityClass);
-		TypedQuery<T> query = em.createQuery(criteriaQuery);
+		var builder = em.getCriteriaBuilder();
+		var criteriaQuery = builder.createQuery(entityClass);
+		var root = criteriaQuery.from(entityClass);
+		var query = em.createQuery(criteriaQuery.select(root));
 		return StreamSupport.stream(new EntitySpliterator<>(query), false);
 	}
 
@@ -142,9 +145,10 @@ public class JpaStandardManager implements JpaManager {
 	 */
 	@Override
 	public <T> Stream<T> stream(Class<T> entityClass, int chunkSize) {
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<T> criteriaQuery = builder.createQuery(entityClass);
-		TypedQuery<T> query = em.createQuery(criteriaQuery);
+		var builder = em.getCriteriaBuilder();
+		var criteriaQuery = builder.createQuery(entityClass);
+		var root = criteriaQuery.from(entityClass);
+		var query = em.createQuery(criteriaQuery.select(root));
 		return StreamSupport.stream(new EntitySpliterator<>(query, chunkSize), false);
 	}
 

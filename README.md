@@ -9,7 +9,7 @@ This Library provides convenient DSL and extensions for working with [Java Persi
 
 ## Requirements
 
-The Library requires [Java SE Development Kit 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or higher
+The Library requires JDK 11 or higher
 
 ## Gradle dependency
 

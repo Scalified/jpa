@@ -1,3 +1,8 @@
+# 2.2.0
+
+* [**#38** Error occurred validating the Criteria](https://github.com/Scalified/jpa/issues/38)
+* [**#39** JDK 11 Update](https://github.com/Scalified/jpa/issues/39)
+
 # 2.1.0
 
 * [**#36** RAW Queries](https://github.com/Scalified/jpa/issues/36)

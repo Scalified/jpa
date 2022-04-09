@@ -53,7 +53,7 @@ public class JpaQueryDslImpl<T> implements JpaQueryDsl<T> {
 	private final Class<T> entityClass;
 
 	/**
-	 * Creates {@link JpaQueryDsl} instance
+	 * Creates {@link JpaQueryDslImpl} instance
 	 *
 	 * @param manager     an underlying {@link JpaManager}
 	 * @param sql         raw SQL query

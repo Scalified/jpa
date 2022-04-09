@@ -32,9 +32,7 @@ import com.scalified.jpa.dsl.entity.JpaEntityDslImpl;
 import com.scalified.jpa.dsl.find.*;
 import com.scalified.jpa.dsl.from.JpaFromDsl;
 import com.scalified.jpa.dsl.from.JpaFromDslImpl;
-import com.scalified.jpa.dsl.query.JpaQueryDsl;
-import com.scalified.jpa.dsl.query.JpaQueryDslImpl;
-import com.scalified.jpa.dsl.query.JpaSpQueryDslImpl;
+import com.scalified.jpa.dsl.query.*;
 import com.scalified.jpa.function.CriteriaFunction;
 import com.scalified.jpa.manager.JpaManager;
 import com.scalified.jpa.manager.JpaStandardManager;
@@ -114,6 +112,18 @@ public class JpaImpl implements Jpa {
 	@Override
 	public <T> JpaFindBySpecificationDsl<T> find(Specification<T> specification) {
 		return new JpaFindBySpecificationDslImpl<>(manager, specification);
+	}
+
+	/**
+	 * Returns {@link JpaQueryExecuteDsl} object, which provides the next <b>DSL</b>
+	 * methods within <b>DSL</b> call chain to execute raw SQL query
+	 *
+	 * @param sql raw SQL query
+	 * @return {@link JpaQueryExecuteDsl} object
+	 */
+	@Override
+	public JpaQueryExecuteDsl query(String sql) {
+		return new JpaQueryExecuteDslImpl(manager, sql);
 	}
 
 	/**

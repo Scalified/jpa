@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2018 Scalified
+ * Copyright (c) 2022 Scalified
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,23 +20,17 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
  */
 
 package com.scalified.jpa.dsl.query;
 
 import com.scalified.jpa.manager.JpaManager;
-import com.scalified.jpa.sp.SpQuery;
-
-import java.util.List;
 
 /**
- * A {@link JpaQueryDsl} implementation for stored procedures execution
- *
  * @author shell
- * @since 2018-08-18
+ * @since 2022-04-09
  */
-public class JpaSpQueryDslImpl<T> implements JpaQueryDsl<T> {
+public class JpaQueryExecuteDslImpl implements JpaQueryExecuteDsl {
 
 	/**
 	 * An underlying {@link JpaManager}
@@ -44,29 +38,29 @@ public class JpaSpQueryDslImpl<T> implements JpaQueryDsl<T> {
 	private final JpaManager manager;
 
 	/**
-	 * {@link SpQuery} used to execute stored procedure
+	 * Raw SQL query
 	 */
-	private final SpQuery<T> query;
+	private final String sql;
 
 	/**
-	 * Creates {@link JpaSpQueryDslImpl} instance
+	 * Creates {@link JpaQueryExecuteDslImpl} instance
 	 *
 	 * @param manager an underlying {@link JpaManager}
-	 * @param query   {@link SpQuery} used to execute stored procedure
+	 * @param sql     raw SQL query
 	 */
-	public JpaSpQueryDslImpl(JpaManager manager, SpQuery<T> query) {
+	public JpaQueryExecuteDslImpl(JpaManager manager, String sql) {
 		this.manager = manager;
-		this.query = query;
+		this.sql = sql;
 	}
 
 	/**
-	 * Returns a list of all results produced by stored procedure execution
+	 * Executes query and returns the number of entities updated or deleted
 	 *
-	 * @return a list of all results
+	 * @return number of entities updated or deleted
 	 */
 	@Override
-	public List<T> list() {
-		return manager.query(query);
+	public int execute() {
+		return manager.query(sql);
 	}
 
 }

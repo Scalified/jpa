@@ -146,6 +146,14 @@ public interface JpaManager {
 	<T, R> R find(Specification<T> specification, ResultFunction<T, R> resultFunction);
 
 	/**
+	 * Executes query and returns the number of entities updated or deleted
+	 *
+	 * @param sql raw SQL query
+	 * @return number of entities updated or deleted
+	 */
+	int query(String sql);
+
+	/**
 	 * Returns the list of entities as a result of raw {@code sql} query execution
 	 *
 	 * @param sql         raw SQL query

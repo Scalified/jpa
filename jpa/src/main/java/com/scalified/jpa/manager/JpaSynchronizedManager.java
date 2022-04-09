@@ -201,6 +201,17 @@ public class JpaSynchronizedManager implements JpaManager {
 	}
 
 	/**
+	 * Executes query and returns the number of entities updated or deleted
+	 *
+	 * @param sql raw SQL query
+	 * @return number of entities updated or deleted
+	 */
+	@Override
+	public synchronized int query(String sql) {
+		return manager.query(sql);
+	}
+
+	/**
 	 * Returns the list of entities as a result of stored procedure execution
 	 * built from the specified {@code spQuery}
 	 *

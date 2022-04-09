@@ -1,3 +1,7 @@
+# 2.3.0
+
+* [**#40** RAW Queries Execution](https://github.com/Scalified/jpa/issues/40)
+
 # 2.2.0
 
 * [**#38** Error occurred validating the Criteria](https://github.com/Scalified/jpa/issues/38)

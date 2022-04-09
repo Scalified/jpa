@@ -31,6 +31,7 @@ import com.scalified.jpa.dsl.find.JpaFindByCriteriaFunctionDsl;
 import com.scalified.jpa.dsl.find.JpaFindByEntityClassDsl;
 import com.scalified.jpa.dsl.find.JpaFindBySpecificationDsl;
 import com.scalified.jpa.dsl.from.JpaFromDsl;
+import com.scalified.jpa.dsl.query.JpaQueryExecuteDsl;
 import com.scalified.jpa.dsl.query.JpaQueryDsl;
 import com.scalified.jpa.function.CriteriaFunction;
 import com.scalified.jpa.sp.SpQuery;
@@ -81,6 +82,15 @@ public interface Jpa {
 	 * @return {@link JpaFindBySpecificationDsl} object
 	 */
 	<T> JpaFindBySpecificationDsl<T> find(Specification<T> specification);
+
+	/**
+	 * Returns {@link JpaQueryExecuteDsl} object, which provides the next <b>DSL</b>
+	 * methods within <b>DSL</b> call chain to execute raw SQL query
+	 *
+	 * @param sql raw SQL query
+	 * @return {@link JpaQueryExecuteDsl} object
+	 */
+	JpaQueryExecuteDsl query(String sql);
 
 	/**
 	 * Returns {@link JpaQueryDsl} object, which provides the next <b>DSL</b>

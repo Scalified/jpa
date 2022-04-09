@@ -225,6 +225,17 @@ public class JpaStandardManager implements JpaManager {
 	}
 
 	/**
+	 * Executes query and returns the number of entities updated or deleted
+	 *
+	 * @param sql raw SQL query
+	 * @return number of entities updated or deleted
+	 */
+	@Override
+	public int query(String sql) {
+		return em.createNativeQuery(sql).executeUpdate();
+	}
+
+	/**
 	 * Returns the list of entities as a result of raw {@code sql} query execution
 	 *
 	 * @param sql         raw SQL query

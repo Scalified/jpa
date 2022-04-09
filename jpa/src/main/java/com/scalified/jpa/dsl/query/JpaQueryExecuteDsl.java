@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2018 Scalified
+ * Copyright (c) 2022 Scalified
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,53 +20,23 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
  */
 
 package com.scalified.jpa.dsl.query;
 
-import com.scalified.jpa.manager.JpaManager;
-import com.scalified.jpa.sp.SpQuery;
-
-import java.util.List;
-
 /**
- * A {@link JpaQueryDsl} implementation for stored procedures execution
+ * <b>DSL</b> for executing queries
  *
  * @author shell
- * @since 2018-08-18
+ * @since 2022-04-09
  */
-public class JpaSpQueryDslImpl<T> implements JpaQueryDsl<T> {
+public interface JpaQueryExecuteDsl {
 
 	/**
-	 * An underlying {@link JpaManager}
-	 */
-	private final JpaManager manager;
-
-	/**
-	 * {@link SpQuery} used to execute stored procedure
-	 */
-	private final SpQuery<T> query;
-
-	/**
-	 * Creates {@link JpaSpQueryDslImpl} instance
+	 * Executes query and returns the number of entities updated or deleted
 	 *
-	 * @param manager an underlying {@link JpaManager}
-	 * @param query   {@link SpQuery} used to execute stored procedure
+	 * @return number of entities updated or deleted
 	 */
-	public JpaSpQueryDslImpl(JpaManager manager, SpQuery<T> query) {
-		this.manager = manager;
-		this.query = query;
-	}
-
-	/**
-	 * Returns a list of all results produced by stored procedure execution
-	 *
-	 * @return a list of all results
-	 */
-	@Override
-	public List<T> list() {
-		return manager.query(query);
-	}
+	int execute();
 
 }

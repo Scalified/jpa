@@ -1,6 +1,6 @@
 # JPA Java Library
 
-[![Build Status](https://travis-ci.org/Scalified/jpa.svg)](https://travis-ci.org/Scalified/jpa)
+[![Build Status](https://github.com/Scalified/jpa/actions/workflows/gradle.yml/badge.svg)](https://github.com/Scalified/jpa/actions)
 [![Maven Central](https://img.shields.io/maven-central/v/com.scalified/jpa.svg)](https://search.maven.org/search?q=g:com.scalified%20AND%20a:jpa&core=gav)
 
 ## Description
@@ -205,17 +205,20 @@ during stream consuming, the new data will also be included into result set.
 Jpa jpa;
 // ... jpa initialization skipped
 
+// Executing raw SQL query
+int count = jpa.query("DELETE FROM PERSON WHERE ID = 1").execute();
+
 // Raw SQL query
 String sql = "SELECT * FROM PERSON"
 
 // Executing raw SQL query and mapping results to set
-Set<Person> resultSet = jpa.query(query, Person.class).set();
+Set<Person> resultSet = jpa.query(sql, Person.class).set();
 
 // Executing raw SQL query and mapping results to list
-List<Person> resultList = jpa.query(query, Person.class).list();
+List<Person> resultList = jpa.query(sql, Person.class).list();
 
 // Executing raw SQL query and retrieving optional result
-Optional<Person> optionalResult = jpa.query(query, Person.class).first();
+Optional<Person> optionalResult = jpa.query(sql, Person.class).first();
 ```
 
 #### Stored Procedures Execution
